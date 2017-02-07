@@ -1,4 +1,4 @@
-# what3words Autosuggest jQuery plugin
+# <img src="https://what3words.com/assets/images/w3w_square_red.png" width="64" height="64" alt="what3words">&nbsp;what3words Autosuggest jQuery plugin
 A jQuery plugin that applies what3words AutoSuggest on an input field, including default styling, based on user input and other parameters.
 
 
