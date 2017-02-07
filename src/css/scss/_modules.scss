@@ -1,0 +1,152 @@
+/**********************/
+/* MODULES: ;		  */
+/**********************/
+
+.icon {
+	max-width: 22px;
+}
+
+//colors
+$color_cod_gray_approx: #0a0a0a;
+$color_romance_approx: #fefefe;
+
+.tooltip {
+	position: relative;
+	cursor: pointer;
+    width: 17px;
+    display: inline-block;
+    @include fs(14);
+
+
+	.content {
+		position: absolute;
+		z-index: 1200;
+		max-width: 10rem;
+		padding: 0.75rem;
+		border-radius: 0;
+		background-color: #e1e1e1;
+		color: #333;
+	    width: 100%;
+	    min-width: 200px;
+	    transform: translateY(-145%);
+	    left: -100px;
+	    display: none;
+	    line-height: 1.3;
+
+	    .inner {
+	    	position: relative;
+
+	    	&:before {
+	    		position: absolute;
+	    		content: '';
+				display: block;
+				left: calc(50% - 20px);
+				bottom: -13px;
+				width: 0;
+				height: 0;
+				  border-left: 20px solid transparent;
+				  border-right: 20px solid transparent;
+				  border-top: 20px solid #e1e1e1;
+	    	}
+	    }
+	}
+
+	&:hover {
+		.content {
+			display: block;
+		}
+	}
+}
+
+
+#map {
+	height: 380px;
+	margin-top: 5rem;
+	position: relative;
+    width: 120%;
+    margin-left: -10%;
+	//display: none;
+
+	@include dw(8) {
+		width: 110%;
+		margin-left: -5%;
+		margin-top: 0;
+	}
+
+	.pin {
+	  position: absolute;
+	  top: 50%;
+	  left: 0;
+	  z-index: 99;
+	  margin-top: -50px;
+	  width: 100%;
+	  text-align: center;
+	  min-height: 22px;
+	  text-align: center;
+
+	  #w3w {
+	  	position: relative;
+	  	display: inline-block;
+		background: $red;
+		color: #FFF;
+	  	padding: 5px 10px;
+	  	min-height: 22px;
+	  	min-width: 220px;
+	  	@include border-radius(4px);
+
+
+		  	&:after {
+				position: absolute;
+				content: '';
+				display: block;
+				left: calc(50% - 20px);
+				bottom: -20px;
+				width: 0;
+				height: 0;
+				border-left: 20px solid transparent;
+				border-right: 20px solid transparent;
+				border-top: 20px solid $red;
+		  	}
+	  	}
+	}
+}
+
+#modal {
+	h3 {
+		font-weight: normal;
+		text-transform: none;
+		font-size: 2rem;
+	}
+}
+
+#w3w-popup {
+    padding: 1rem 1rem 1rem 5rem;
+    display: inline-block;
+    border: 2px solid black;
+    margin: 1rem;
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 500;
+
+	@include dw(6) {
+		@include fs(17);
+	}
+
+    svg {
+	    max-width: 30px;
+	    position: absolute;
+	    left: 8px;
+	    top: 7px;
+    }
+}
+
+.notification {
+	border: 1px solid #e6323d;
+    border-left: 10px solid #e6323d;
+    padding: 5px 10px;
+    line-height: 1.3;
+}
+
+
+
+
