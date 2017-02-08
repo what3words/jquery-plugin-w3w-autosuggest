@@ -41,7 +41,7 @@
     "gulp-scp2": "^0.2.0",
     "gulp-streamify": "^1.0.2",
     "gulpify": "^0.1.1",
-    "jquery": "^3.1.1",
+    "jquery": "2.1.1",
     "jquery-typeahead": "^2.7.3",
     "jquery-validation": "^1.16.0",
     "require-dir": "^0.3.1",
