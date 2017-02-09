@@ -9370,7 +9370,7 @@ var validator = require("jquery-validation");
 
                             return [
                                 '<div class="list-inner">',
-                                '<span class="twa-flag"><img src="images/flags/{{country}}.png"></span>',
+                                '<span class="twa-flag"><img src="' + _self.options.path_to_flags + '{{country}}.png"></span>',
                                 '<span class="twa">{{words}}</span>', '<br>', '<span class="info">',
                                 '{{place}}</span>', '</div>'
                             ].join('\n');
@@ -9613,7 +9613,8 @@ var validator = require("jquery-validation");
         direction: 'ltr',
         placeholder: 'e.g. lock.spout.radar',
         validation: true,
-        valid_error: 'Please enter a valid 3 word address.'
+        valid_error: 'Please enter a valid 3 word address.',
+        path_to_flags: 'images/flags/'
     };
 
 })( jQuery, window, document );
