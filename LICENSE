@@ -1,3 +1,6 @@
+Different parts of this plugin are released under different licenses. The code itself is released under the MIT license reproduced below, and the graphical assets (flags) in folder ./images/flags/* are included in this license. Please see below.
+
+
 MIT License
 
 Copyright (c) 2017 what3words LTD.
@@ -19,3 +22,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+IconDrawer flags
+
+what3words has a license for the IconDraw flags which allows us to provide them to you as part of this software product. You are not licensed to extract the flags from this software product and use them in another context. To do that please check the IconDrawer licensing terms which are available at : http://www.icondrawer.com/buy.php#license
+
+

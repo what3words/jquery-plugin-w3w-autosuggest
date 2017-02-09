@@ -9370,7 +9370,7 @@ var validator = require("jquery-validation");
 
                             return [
                                 '<div class="list-inner">',
-                                '<span class="twa-flag"></span>',
+                                '<span class="twa-flag"><img src="images/flags/{{country}}.png"></span>',
                                 '<span class="twa">{{words}}</span>', '<br>', '<span class="info">',
                                 '{{place}}</span>', '</div>'
                             ].join('\n');
