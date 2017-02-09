@@ -245,7 +245,7 @@ var validator = require("jquery-validation");
                     onClickAfter: function(node, a, item, event) {
                         //validate field when result being clicked
                         $(_self.element).closest('form').validate().element(".w3w_valid");
-                        //$('#w3w-address-error, #shipping_w3w-error').empty();
+                        $(_self.element).closest('.typeahead__container').nextAll('.typeahead-validation').empty();
                         if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
                             $(_self.element).closest('.typeahead__query').addClass('valid');
                         }
