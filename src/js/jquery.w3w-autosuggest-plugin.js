@@ -43,7 +43,6 @@ var validator = require("jquery-validation");
         },
 
         buildWrappers: function() {
-            console.log($(this.element));
             var direction = this.options.direction;
 
             $(this.element).wrapAll('<div class="typeahead__container ' + direction + '"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>');
@@ -86,7 +85,9 @@ var validator = require("jquery-validation");
                 console.log('No what3words API key found!');
                 alert('A what3words API key is required to use the AutoSuggest plugin. Information on how to register for a key can be found in the README')
             } else {
-                console.log('what3words API key: ' + this.options.key);
+                if (this.options.debug) {
+                    console.log('what3words API key: ' + this.options.key);
+                }
             }
 
             //SET Arabic input direction
