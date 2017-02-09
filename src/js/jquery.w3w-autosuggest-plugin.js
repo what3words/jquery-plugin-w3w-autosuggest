@@ -283,7 +283,6 @@ var validator = require("jquery-validation");
                 // IF has content
                 else {
                     var isSuccess = false;
-                    $(_self.element).closest('.typeahead__query').removeClass('valid');
 
                     $.ajax({
                         url: W3W_API_END_POINT + 'forward',
@@ -351,6 +350,10 @@ var validator = require("jquery-validation");
 
                         //user is "finished typing," run regex and validate
                         function doneTyping () {
+                            //remove valid mark every time
+                            $(element).closest('.typeahead__query').removeClass('valid');
+
+                            //Only check for validation when regex match
                             if (regex.test($(element).val())) {
                                 $(element).valid();
                             }
