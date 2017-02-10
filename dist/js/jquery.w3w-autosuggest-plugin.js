@@ -9390,9 +9390,11 @@ var validator = require("jquery-validation");
                                         display: 'full'
                                     };
 
+                                    var autosuggest = _self.options.auto_detect_lang ? 'autosuggest-ml' : 'autosuggest';
+
                                     return {
                                         type: 'GET',
-                                        url: W3W_API_END_POINT + 'autosuggest',
+                                        url: W3W_API_END_POINT + autosuggest,
                                         data: data,
                                         path: 'suggestions',
                                         beforeSend: function(jqXHR, options) {
@@ -9518,22 +9520,6 @@ var validator = require("jquery-validation");
                             // If W3A is VALID
                             if (response.hasOwnProperty('geometry')) {
                                 isSuccess=true;
-
-                                if (_self.options.auto_detect_lang == true) {
-                                    _self.options.lang = response.language;
-
-                                    // console.log('-----------EXACT MATCH / VALID ------------');
-                                    if (!$('.typeahead__container').hasClass('auto-lang')) {
-
-                                        //In case Exact Match, switch language to the match language
-                                        //$(_self.element).eq(0).val(response.words).trigger("input");
-                                        $('.typeahead__container').addClass('auto-lang');
-                                    }
-                                }
-
-                            // If W3A is NOT VALID
-                            } else {
-
                             }
                         }
                     });
@@ -9574,12 +9560,6 @@ var validator = require("jquery-validation");
                             //Only check for validation when regex match
                             if (regex.test($(element).val())) {
                                 $(element).valid();
-                            }
-                            else {
-                                if (_self.options.auto_detect_lang == true) {
-                                    _self.options.lang = initial_language;
-                                    $(_self.element).closest('.typeahead__container').removeClass('auto-lang');
-                                }
                             }
                         }
                     }
