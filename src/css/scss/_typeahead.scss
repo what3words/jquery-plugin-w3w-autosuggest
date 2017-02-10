@@ -358,6 +358,10 @@ $text-color: #333;
 .typeahead__list {
 	@extend %extend_4;
 
+	.twa {
+	    font-size: 15px;
+	}
+
 	.twa-flag {
 		float: left;
 		max-width: 30px;
@@ -372,6 +376,7 @@ $text-color: #333;
 	.info {
 		display: block;
 		overflow: hidden;
+		font-size: 12px;
 	}
 
 	> li {
