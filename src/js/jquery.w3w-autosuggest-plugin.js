@@ -368,7 +368,7 @@ var validator = require("jquery-validation");
         key: '',
         debug: false,
         validate: true,
-        count: 20,
+        count: 50,
         results: 3,
         lang: 'en',
         auto_detect_lang: true,
