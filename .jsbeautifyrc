@@ -43,6 +43,6 @@
     "space_in_empty_paren": false,
     "space_in_paren": false,
     "unescape_strings": false,
-    "wrap_line_length": 120
+    "wrap_line_length": 180
   }
 }
