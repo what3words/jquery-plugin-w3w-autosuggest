@@ -9223,13 +9223,15 @@ window.$ = $;
 var typeahead = require('jquery-typeahead');
 var validator = require('jquery-validation');
 /* eslint-enable */
+
 /*!
  * jQuery w3w-autosuggest
  * Copyright (C) 2017 what3words Limited
  * Licensed under the MIT license
  *
  * @author Jozsef Francovszky
- * @version 1.0.0 (07-02-2017)
+ * @author Arnaud Ferrand
+ * @version 1.2.0
  * @link
  */
 
@@ -9240,6 +9242,7 @@ var validator = require('jquery-validation');
   var pluginName = 'w3wAddress';
 
   var Plugin = function (element, options) {
+    this._api_end_point = 'https://api.what3words.com/v2/';
     this.element = element;
     this._name = pluginName;
     this._defaults = $.fn.w3wAddress.defaults;
@@ -9292,19 +9295,10 @@ var validator = require('jquery-validation');
     },
 
     autoSuggest: function () {
-      var W3W_API_END_POINT = 'https://api.what3words.com/v2/';
-      // var W3W_MAP_END_POINT = 'https://map.what3words.com/';
-      var W3W_API_KEY = this.options.key;
-      var twaRegex = /^(\D{3,})\.(\D{3,})\.(\D{1,})$/i;
-
-      // Check if Country Selector defined.
-      if (this.options.country_selector !== '') {
-        // Give it a default value;
-        var selectedCountry = 'gb';
-      }
+      var twaPartialRegex = (/^(\D{3,})\.(\D{3,})\.(\D{1,})$/i);
 
       // DEBUG IF has key
-      if (W3W_API_KEY === '' && this.options.debug) {
+      if (this.options.key === '' && this.options.debug) {
         console.log('No what3words API key found!');
         alert(
           'A what3words API key is required to use the AutoSuggest plugin. Information on how to register for a key can be found in the README'
@@ -9336,13 +9330,12 @@ var validator = require('jquery-validation');
         source: {
           autosuggest: {
             filter: function (item, displayKey) {
-              if (selectedCountry) {
-                selectedCountry = $(_self.options.country_selector).val().toLowerCase();
-
+              var selectedCountry = _self.options.country_filter;
+              if (selectedCountry !== null) {
                 // Debug info
                 if (_self.options.debug) {
-                  console.log('w3wAddress country_selector: ');
-                  console.log($(_self.options.country_selector));
+                  console.log('w3wAddress country_filter: ');
+                  console.log($(_self.options.country_filter));
                   console.log('Selected Country is: ' + selectedCountry);
                   console.log('#################################');
                 }
@@ -9379,43 +9372,25 @@ var validator = require('jquery-validation');
               ].join('\n');
             },
             ajax: function (query) {
-              var m = twaRegex.exec(query);
+              var m = twaPartialRegex.exec(query);
               if (m !== null) {
                 var data = {
                   addr: '{{query}}',
                   format: 'json',
-                  lang: _self.options.lang,
                   key: _self.options.key,
                   count: _self.options.count,
                   display: 'full'
                 };
 
-                var autosuggest = _self.options.auto_detect_lang ? 'autosuggest-ml' : 'autosuggest';
-
+                if (typeof _self.options.lang !== 'undefined' && _self.options.lang) {
+                  data.lang = _self.options.lang;
+                }
+                var autosuggest = _self.options.use_multilingual ? 'autosuggest-ml' : 'autosuggest';
                 return {
                   type: 'GET',
-                  url: W3W_API_END_POINT + autosuggest,
+                  url: _self._api_end_point + autosuggest,
                   data: data,
-                  path: 'suggestions',
-                  beforeSend: function (jqXHR, options) {
-                    // is it possible here to cancel request ?
-                    // console.log(options);
-                  },
-                  callback: {
-                    done: function (data, textStatus, jqXHR) {
-                      // TODO handle errors to display message ?
-
-                      if (data.suggestions) {
-                        // console.log('ajax::done() ' + data.suggestions.length);
-                      }
-                      // Perform operations on received data...
-                      // IMPORTANT: data has to be returned if this callback is used
-                      return data;
-                    },
-                    fail: function (jqXHR, textStatus, errorThrown) {},
-                    always: function (data, textStatus, jqXHR) {},
-                    then: function (jqXHR, textStatus) {}
-                  }
+                  path: 'suggestions'
                 };
               } else {
                 // workaround to cancel request:
@@ -9475,9 +9450,7 @@ var validator = require('jquery-validation');
     },
 
     validation: function () {
-      // var initial_language = this.options.lang;
-
-      // Return, dont run validation if Option set to false
+      // Return, don't run validation if Option set to false
       if (this.options.validation === false) {
         return;
       }
@@ -9487,9 +9460,6 @@ var validator = require('jquery-validation');
         console.log('Validating the w3wAddress field');
       }
 
-      var W3W_API_END_POINT = 'https://api.what3words.com/v2/';
-      // var W3W_MAP_END_POINT = 'https://map.what3words.com/';
-      var W3W_API_KEY = this.options.key;
       var noMatch = false;
 
       var _self = this;
@@ -9502,26 +9472,28 @@ var validator = require('jquery-validation');
         } else {
           // IF has content
           var isSuccess = false;
-
-          $.ajax({
-            url: W3W_API_END_POINT + 'forward',
-            type: 'GET',
-            async: false,
-            data: {
-              addr: value,
-              key: W3W_API_KEY,
-              format: 'json'
-            },
-            dataType: 'json',
-            success: function (result) {
-              var response = result;
-
-              // If W3A is VALID
-              if (response.hasOwnProperty('geometry')) {
-                isSuccess = true;
-              }
-            }
-          });
+          var twaRegex = (/^(\D{3,})\.(\D{3,})\.(\D{3,})$/i);
+          var m = twaRegex.exec(value);
+          if (m !== null) {
+            $.ajax({
+              url: _self._api_end_point + 'forward',
+              type: 'GET',
+              async: false,
+              data: {
+                addr: value,
+                key: _self.options.key,
+                format: 'json'
+              },
+              dataType: 'json',
+              success: function (result) {
+                var response = result;
+                // If W3A is VALID
+                if (response.hasOwnProperty('geometry')) {
+                  isSuccess = true;
+                }
+              } // end success
+            });
+          }
           return isSuccess;
         }
       }, function () {
@@ -9580,14 +9552,14 @@ var validator = require('jquery-validation');
   };
 
   $.fn.w3wAddress.defaults = {
-    country_selector: '',
+    country_filter: null,
     key: '',
     debug: false,
     validate: true,
     count: 50,
     results: 3,
     lang: 'en',
-    auto_detect_lang: true,
+    use_multilingual: true,
     direction: 'ltr',
     placeholder: 'e.g. lock.spout.radar',
     validation: true,
