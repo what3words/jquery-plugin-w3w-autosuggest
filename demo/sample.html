@@ -19,25 +19,21 @@
     <div class="form-row">
       <input type="text" class="w3w-address-field" id="one">
     </div>
-    <div class="form-row">
-      <input type="submit" value="Click on me!">
-    </div>
   </form>
-  <script src="../node_modules/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
   <script src="../dist/js/jquery.w3w-autosuggest-plugin.js"></script>
   <!-- file defining the Your API KEY -->
   <!-- var key = 'YOUR-API-KEY'; -->
   <script src="key.js"></script>
 
   <script>
-  $('.w3w-address-field').w3wAddress({
+  var plugin = $('.w3w-address-field').w3wAddress({
     key: key,
     results: 5,
-    //country_selector: '.country-selector',
-    auto_detect_lang: false,
+    //country_filter: 'gb',
+    use_multilingual: true,
+    //lang: 'fr',
     path_to_flags: '../dist/images/flags/'
   });
-
   </script>
 </body>
 
