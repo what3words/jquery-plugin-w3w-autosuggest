@@ -86,7 +86,7 @@ The `lang` parameter is mandatory for `autosuggest`; we recommend that you se
 You can use the what3words [Get Languages API](https://docs.what3words.com/api/v2/#lang) method for a list of all currently loaded and available 3 word address languages.
 
 ###Results
- By default, 3 results will be returned. If required a number of results, up to a maximum of 100, may be specified.
+ By default, 3 results are displayed with a 50 background suggestions available to filter by country.
 
 ##AutoSuggest jQuery Plugin
 
@@ -119,4 +119,5 @@ Parameters to be passed to the AutoSuggest plugin.
 
 # Revision History
 
+* `v1.1.0` 13/02/17 - uses API method `autosuggest-ml` with number of background results increased to 50
 * `v1.0.0` 07/02/17 - Initial release
