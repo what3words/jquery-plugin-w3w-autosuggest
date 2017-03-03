@@ -4,11 +4,10 @@
      that change within the directory it's serving from
 */
 
-var gulp = require('gulp'),
-	watch = require('gulp-watch');
+var gulp = require('gulp');
 
-gulp.task('watch', function() {
-	gulp.watch('./src/**/*.html', ['markup']);
-    gulp.watch('./src/css/scss/**/*.scss', ['sass']);
-    gulp.watch('./src/js/*.js', ['browserify', 'browserify-min']);
+gulp.task('watch', function () {
+  gulp.watch('./src/**/*.html', ['markup']);
+  gulp.watch('./src/css/scss/**/*.scss', ['sass']);
+  gulp.watch('./src/js/*.js', ['browserify', 'browserify-min']);
 });

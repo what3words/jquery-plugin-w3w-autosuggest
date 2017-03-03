@@ -1,3 +1,3 @@
 var gulp = require('gulp');
 
-gulp.task('build', ['markup', 'sass', 'browserify', 'browserify-min', 'images']);
+gulp.task('build', ['sass', 'browserify', 'browserify-min', 'images']);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>W3W Addressify plugin DEMO</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../dist/css/jquery.w3w-autosuggest-plugin.css">
+</head>
+<style>
+.form-row {
+  max-width: 325px;
+}
+
+</style>
+
+<body>
+  <form action="" id="randomForm">
+    <div class="form-row">
+      <input type="text" class="w3w-address-field" id="one">
+    </div>
+    <div class="form-row">
+      <input type="submit" value="Click on me!">
+    </div>
+  </form>
+  <script src="../node_modules/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
+  <script src="../dist/js/jquery.w3w-autosuggest-plugin.js"></script>
+  <!-- file defining the Your API KEY -->
+  <!-- var key = 'YOUR-API-KEY'; -->
+  <script src="key.js"></script>
+
+  <script>
+  $('.w3w-address-field').w3wAddress({
+    key: key,
+    results: 5,
+    //country_selector: '.country-selector',
+    auto_detect_lang: false,
+    path_to_flags: '../dist/images/flags/'
+  });
+
+  </script>
+</body>
+
+</html>
