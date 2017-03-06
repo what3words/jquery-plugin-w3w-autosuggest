@@ -18,7 +18,8 @@ While `autosuggest` uses the `clipping` parameter to determine the geographical 
 
 ### _TBD_ Prerequisites
 - jQuery 1.7.2 and above because of .on event handler
-- Typeahead plugin 2.8.0
+- jquery-Typeahead plugin 2.8.0 https://www.npmjs.com/package/jquery-typeahead
+- jquery-validation plugin  1.16.0 https://www.npmjs.com/package/jquery-validation
 
 Make sure to include jQuery in your page:
 ```markup

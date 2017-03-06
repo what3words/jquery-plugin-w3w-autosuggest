@@ -2,31 +2,104 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>W3W Addressify plugin DEMO</title>
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- include plugin's CSS -->
   <link rel="stylesheet" href="../dist/css/jquery.w3w-autosuggest-plugin.css">
 </head>
 <style>
+body {
+  padding-top: 50px;
+}
+
 .form-row {
   max-width: 325px;
+}
+
+.demo {
+  padding: 40px 15px;
 }
 
 </style>
 
 <body>
-  <form action="" id="randomForm">
-    <div class="form-row">
-      <input type="text" class="w3w-address-field" id="one">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">w3w autosuggest jQuery plugin</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
     </div>
-  </form>
-  <script src="../dist/js/jquery.w3w-autosuggest-plugin.js"></script>
-  <!-- file defining the Your API KEY -->
+  </nav>
+  <div class="container">
+
+    <h2>ml validation</h2>
+    <div class="demo">
+      <form>
+        <div class="form-row">
+          <input type="text" class="w3w-address-field" id="one">
+        </div>
+      </form>
+    </div>
+
+    <h2>ml validation two input (apply on css class)</h2>
+    <div class="demo">
+      <form>
+        <div class="form-row">
+          <input type="text" name="billing-address" class="w3w-address-field demo2">
+        </div>
+        <div class="form-row">
+          <input type="text" name="delivery-address" class="w3w-address-field demo2">
+        </div>
+      </form>
+    </div>
+
+    <h2>ml no-validation</h2>
+    <div class="demo">
+      <form>
+        <div class="form-row">
+          <input type="text" class="w3w-address-field" id="no-validation">
+        </div>
+      </form>
+    </div>
+
+    <h2>autosuggest lang=en validation</h2>
+    <div class="demo">
+      <form action="" id="randomForm">
+        <div class="form-row">
+          <input type="text" class="w3w-address-field" id="autosuggest">
+        </div>
+      </form>
+    </div>
+
+  </div>
+  <!-- /.container -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <!-- <script src="../node_modules/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
+  <script src="../node_modules/jquery-validation/dist/jquery.validate.min.js"></script> -->
+  <!-- include plugin's javascript -->
+  <script src="../dist/js/jquery.w3w-autosuggest-plugin.bundle.min.js"></script>
+  <!-- file defining the API KEY -->
   <!-- var key = 'YOUR-API-KEY'; -->
   <script src="key.js"></script>
-
   <script>
-  var plugin = $('.w3w-address-field').w3wAddress({
+  var plugin0 = $('#one').w3wAddress({
     key: key,
     results: 5,
     //country_filter: 'gb',
@@ -34,6 +107,32 @@
     //lang: 'fr',
     path_to_flags: '../dist/images/flags/'
   });
+
+  var plugin01 = $('.demo2').w3wAddress({
+    key: key,
+    results: 5,
+    //country_filter: 'gb',
+    //use_multilingual: false,
+    //lang: 'fr',
+    path_to_flags: '../dist/images/flags/'
+  });
+
+  var pluginNoValidation = $('#no-validation').w3wAddress({
+    key: key,
+    results: 5,
+    validation: false,
+    path_to_flags: '../dist/images/flags/'
+  });
+
+  var pluginAutosuggest = $('#autosuggest').w3wAddress({
+    key: key,
+    results: 5,
+    //country_filter: 'gb',
+    use_multilingual: false,
+    lang: 'en',
+    path_to_flags: '../dist/images/flags/'
+  });
+
   </script>
 </body>
 

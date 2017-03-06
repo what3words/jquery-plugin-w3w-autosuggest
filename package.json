@@ -16,29 +16,12 @@
     "url": "https://github.com/w3w-internal/jquery-plugin-w3w-autosuggest/issues"
   },
   "homepage": "https://github.com/w3w-internal/jquery-plugin-w3w-autosuggest#readme",
-  "browser": {
-    "jquery-validation": "./node_modules/jquery-validation/dist/jquery.validate.min.js"
-  },
-  "browserify-shim": {
-    "jquery-validation": {
-      "depends": [
-        "jquery:jQuery"
-      ]
-    }
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
   "dependencies": {
     "jquery": "2.1.1",
     "jquery-typeahead": "^2.8.0",
     "jquery-validation": "^1.16.0"
   },
   "devDependencies": {
-    "browserify": "^13.1.1",
-    "browserify-shim": "^3.8.12",
     "del": "^2.2.2",
     "eslint": "^3.16.1",
     "eslint-config-standard": "^7.0.0",
@@ -49,7 +32,9 @@
     "gulp-bump": "^2.7.0",
     "gulp-changed": "^1.3.2",
     "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
     "gulp-eslint": "^3.0.1",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "latest",
     "gulp-sourcemaps": "^1.9.1",
     "gulp-streamify": "^1.0.2",

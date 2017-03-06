@@ -1,11 +1,3 @@
-global.jQuery = require('jquery');
-var $ = global.jQuery;
-window.$ = $;
-/* eslint-disable */
-var typeahead = require('jquery-typeahead');
-var validator = require('jquery-validation');
-/* eslint-enable */
-
 /*!
  * jQuery w3w-autosuggest
  * Copyright (C) 2017 what3words Limited
@@ -17,13 +9,41 @@ var validator = require('jquery-validation');
  * @link
  */
 
-;
-(function ($, window, document) {
+(function (factory) {
+  /* global define */
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node/CommonJS
+    module.exports = function (root, jQuery) {
+      if (jQuery === undefined) {
+        if (typeof window !== 'undefined') {
+          jQuery = require('jquery');
+        } else {
+          jQuery = require('jquery')(root);
+        }
+      }
+      factory(jQuery);
+      return jQuery;
+    };
+  } else {
+    // Browser globals
+    /* global jQuery */
+    factory(jQuery);
+  }
+}(function ($) {
   'use strict';
 
   var pluginName = 'w3wAddress';
 
-  var Plugin = function (element, options) {
+  /**
+   * Create an instance of AutoSuggest
+   *
+   * @constructor
+   * @param {Node} element The &lt;input&gt; element
+   * @param {Object} options Options
+   */
+  var AutoSuggest = function (element, options) {
     this._api_end_point = 'https://api.what3words.com/v2/';
     this.element = element;
     this._name = pluginName;
@@ -33,7 +53,7 @@ var validator = require('jquery-validation');
     this.init();
   };
 
-  $.extend(Plugin.prototype, {
+  $.extend(AutoSuggest.prototype, {
 
     init: function () {
       this.buildWrappers();
@@ -51,9 +71,11 @@ var validator = require('jquery-validation');
 
       $(this.element).wrapAll('<div class="typeahead__container ' + direction +
         '"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>');
+
       $(this.element).closest('.typeahead__container').prepend(
         '<img class="w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">'
-      ).after('<div class="typeahead-validation"></div>');
+      ).after('<div class="w3w__validation"></div>');
+
       $(this.element).addClass('w3w_valid').attr('placeholder', this.options.placeholder + ' ').attr(
         'autocomplete', 'off').attr('dir', 'auto');
     },
@@ -77,7 +99,7 @@ var validator = require('jquery-validation');
     },
 
     autoSuggest: function () {
-      var twaPartialRegex = (/^(\D{3,})\.(\D{3,})\.(\D{1,})$/i);
+      var twaPartialRegex = (/^(\D{1,})\.(\D{1,})\.(\D{1,})$/i);
 
       // DEBUG IF has key
       if (this.options.key === '' && this.options.debug) {
@@ -102,7 +124,7 @@ var validator = require('jquery-validation');
       $.typeahead({
         debug: true,
         input: $(this.element),
-        minLength: 9, // xxx.xxx.x
+        minLength: 5, // x.x.x
         compression: true,
         hint: true,
         emptyTemplate: false,
@@ -167,6 +189,10 @@ var validator = require('jquery-validation');
                 if (typeof _self.options.lang !== 'undefined' && _self.options.lang) {
                   data.lang = _self.options.lang;
                 }
+                // if method is autosuggest, lang is mandatory and set default to 'en'
+                if (!_self.options.use_multilingual && typeof data.lang === 'undefined') {
+                  data.lang = 'en';
+                }
                 var autosuggest = _self.options.use_multilingual ? 'autosuggest-ml' : 'autosuggest';
                 return {
                   type: 'GET',
@@ -220,11 +246,13 @@ var validator = require('jquery-validation');
             }
           },
           onClickAfter: function (node, a, item, event) {
-            // validate field when result being clicked
-            $(_self.element).closest('form').validate().element('.w3w_valid');
-            $(_self.element).closest('.typeahead__container').nextAll('.typeahead-validation').empty();
-            if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
-              $(_self.element).closest('.typeahead__query').addClass('valid');
+            if (_self.options.validation) {
+              // validate field when result being clicked
+              $(_self.element).closest('form').validate().element('.w3w_valid');
+              $(_self.element).closest('.typeahead__container').nextAll('.w3w__validation').empty();
+              if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
+                $(_self.element).closest('.typeahead__query').addClass('valid');
+              }
             }
           }
         }
@@ -293,7 +321,7 @@ var validator = require('jquery-validation');
 
       var typingTimer; // timer identifier
       var doneTypingInterval = 500;
-      var regex = /^(\D{3,})\.(\D{3,})\.(\D{1,})$/i;
+      var regex = /^(\D{1,})\.(\D{1,})\.(\D{1,})$/i;
 
       // Init validation
       $(this.element).closest('form').validate({
@@ -318,34 +346,44 @@ var validator = require('jquery-validation');
         },
         errorPlacement: function (error, element) {
           var valid_container = element.closest('.typeahead__container');
-          error.appendTo(valid_container.siblings('.typeahead-validation'));
+          error.appendTo(valid_container.siblings('.w3w__validation'));
         }
       });
     }
   });
 
+  /**
+   * [w3wAddress description]
+   * @param  {[type]} options [description]
+   * @return {[type]}         [description]
+   */
   $.fn.w3wAddress = function (options) {
     this.each(function () {
       if (!$.data(this, 'plugin_' + pluginName)) {
-        $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+        $.data(this, 'plugin_' + pluginName, new AutoSuggest(this, options));
       }
     });
     return this;
   };
 
+  /**
+   * Default plugin options
+   *
+   * @type {object}
+   */
   $.fn.w3wAddress.defaults = {
     country_filter: null,
     key: '',
     debug: false,
-    validate: true,
     count: 50,
     results: 3,
-    lang: 'en',
+    lang: null,
     use_multilingual: true,
     direction: 'ltr',
     placeholder: 'e.g. lock.spout.radar',
     validation: true,
+    validate: true,
     valid_error: 'Please enter a valid 3 word address.',
     path_to_flags: 'images/flags/'
   };
-})($, window, document);
+}));
