@@ -1,5 +1,9 @@
 # <img src="https://what3words.com/assets/images/w3w_square_red.png" width="32" height="32" alt="what3words">&nbsp;what3words Autosuggest jQuery plugin
-A jQuery plugin that applies what3words AutoSuggest on an input field, including default styling, based on user input and other parameters.
+Easily capture 3 word addresses on your website with the *3 word address validation* JQuery plugin by what3words.
+
+what3words is a global addressing system. It has divided the world into a grid of 3m x 3m squares and assigned each one a unique 3 word address. what3words is more accurate than traditional street addressing, and even allows location information to be captured for places without addresses, such as parks or beaches.
+The 3 word address validation plugin created by what3words allows you to easily integrate 3 word addresses into your site by applying what3words AutoSuggest on an input field, including default styling.
+
 
 ## AutoSuggest jQuery Plugin
 
@@ -93,12 +97,12 @@ Parameters to be passed to the AutoSuggest plugin.
 | -------------------|------------|-----------|---------|----------------------|
 | `key`              | `String`   | mandatory | | Your API key |
 | `debug`            | `Boolean`  |  optional | false | Enables debug info in console |
-| `use_multilingual` | `Boolean`  |  optional | true |  Uses the multilingulal API methode |
-| `lang`             | `String`   |  optional | see description | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code. Default is `en` if `use_multilingual` is `false` |
+| `multilingual` | `Boolean`  |  optional | true |  Enables the multilingual variant of autosuggest |
+| `lang`             | `String`   |  optional | see description | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code. Default is `en` if `multilingual` is `false` |
 | `results`          | `Number`   |  optional | 3 | Number of items to show in the result list |
 | `country_filter`   | `String`   |  optional | null | Set country code as an [ISO 3166-1 alpha-2]https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 2 letter code  |
 | `count`            | `Number`   |  optional | 50 | Number of items to retrieve from API |
-| `direction`        | `String`   |  optional | ltr | default is `ltr`, can be set to `rtl` for example when language is Arabic |
+| `direction`        | `String`   |  optional | ltr | default is `ltr`, can be set to `rtl` e.g. for Arabic |
 | `placeholder`      | `String`   |  optional |  | Sets the placeholder text of the input field (default is `placeholder: 'e.g. lock.spout.radar'). |
 | `validate`         | `Boolean`  |  optional | true | _TBD_ Adds validation input using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
 
@@ -106,7 +110,8 @@ Parameters to be passed to the AutoSuggest plugin.
 ## Building
 
 ### Prerequisites
-node, gulp
+- node, gulp
+- ~glue~
 
 ### Set up
 ```
@@ -138,8 +143,27 @@ The build process is automatic using `gulp watch`. Gulp is watching for Javascri
 To add or customise styling, set up the development environment, and simply edit / add SCSS files in `./src` folder.
 
 
+<!-- ### glue
+
+`glue` is used to assemble flag image files into a sprite css. This task is already done.
+sprite and result scss file are in `src/images/sprite`
+
+to run this task :
+- install `glue` http://glue.readthedocs.io/en/latest/installation.html
+- `npm i gulp-glue`
+
+and then run gulp task image :
+
+>`gulp images`. -->
+
+### sprite
+Manual task done:
+- upload images from ./src/images/flags into http://responsive-css.us/ ,
+- save sprite and css in src/images/sprite
+- use https://tinypng.com/ to shrink image weight
+
 # Revision History
 
-* `v1.2.0` TBD      - refactoring plugin : tidying up dependencies, building single and bundle distribution files. Parameters : `use_multilingual` replace `auto_detect_lang`, `country_filter` replaces `country_selector` using only an ISO_3166-1_alpha-2 code, adds setters
+* `v1.2.0` TBD      - refactoring plugin : tidying up dependencies, building single and bundle distribution files. Parameters : `multilingual` replace `auto_detect_lang`, `country_filter` replaces `country_selector` using only an ISO_3166-1_alpha-2 code, adds setters
 * `v1.1.0` 13/02/17 - uses API method `autosuggest-ml` with number of background results increased to 50
 * `v1.0.0` 07/02/17 - Initial release
