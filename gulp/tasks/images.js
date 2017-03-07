@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var imagemin = require('gulp-imagemin');
+// var imagemin = require('gulp-imagemin');
 // var glue;
 // try {
 //   glue = require('gulp-glue');
@@ -7,10 +7,11 @@ var imagemin = require('gulp-imagemin');
 
 gulp.task('images', ['imagemin']);
 
-gulp.task('imagemin', function (done) {
-  return gulp.src('src/images/sprite/_flags.png')
-    .pipe(imagemin())
-    .pipe(gulp.dest('src/images/sprite/flags.png'));
+gulp.task('imagemin', ['icon'], function (done) {
+  console.log('do no use, as sprite is not responsive');
+  // return gulp.src('src/images/sprite/flags.png')
+  //   .pipe(imagemin())
+  //   .pipe(gulp.dest('src/images/sprite/flags.png'));
 });
 
 gulp.task('icon', function (done) {
