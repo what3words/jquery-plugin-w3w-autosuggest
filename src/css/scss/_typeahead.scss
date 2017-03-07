@@ -1,10 +1,3 @@
-//colors
-$color_light_gray: #f5f5f5;
-$silver:  silver;
-$white: #fff;
-$color_mid_gray: #ccc;
-$text-color: #333;
-
 
 //.typeahead__dropdown, .typeahead__list
 %extend_4 {
@@ -364,13 +357,15 @@ $text-color: #333;
 
 	.twa-flag {
 		float: left;
-		max-width: 30px;
+		width: 30px;
+		height: 30px;
 		margin-right: 10px;
-
-		img {
-			max-width: 100%;
-			box-shadow: none !important;
-		}
+		// width: 30px;
+		// height: 30px;
+		// img {
+		// 	max-width: 100%;
+		// 	box-shadow: none !important;
+		// }
 	}
 
 	.info {
