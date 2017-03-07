@@ -93,18 +93,18 @@ You can use the what3words [Get Languages API](https://docs.what3words.com/api/v
 
 Parameters to be passed to the AutoSuggest plugin.
 
-| Option             | Type       | Optional? | Default | Description |
-| -------------------|------------|-----------|---------|----------------------|
-| `key`              | `String`   | mandatory | | Your API key |
-| `debug`            | `Boolean`  |  optional | false | Enables debug info in console |
+| Option         | Type       | Optional? | Default | Description |
+| ---------------|------------|-----------|---------|----------------------|
+| `key`          | `String`   | mandatory | | Your API key |
+| `debug`        | `Boolean`  |  optional | false | Enables debug info in console |
 | `multilingual` | `Boolean`  |  optional | true |  Enables the multilingual variant of autosuggest |
-| `lang`             | `String`   |  optional | see description | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code. Default is `en` if `multilingual` is `false` |
-| `results`          | `Number`   |  optional | 3 | Number of items to show in the result list |
-| `country_filter`   | `String`   |  optional | null | Set country code as an [ISO 3166-1 alpha-2]https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 2 letter code  |
-| `count`            | `Number`   |  optional | 50 | Number of items to retrieve from API |
-| `direction`        | `String`   |  optional | ltr | default is `ltr`, can be set to `rtl` e.g. for Arabic |
-| `placeholder`      | `String`   |  optional |  | Sets the placeholder text of the input field (default is `placeholder: 'e.g. lock.spout.radar'). |
-| `validate`         | `Boolean`  |  optional | true | _TBD_ Adds validation input using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
+| `lang`         | `String`   |  optional | see description | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code. Default is `en` if `multilingual` is `false` |
+| `results`        | `Number`   |  optional | 3 | Number of items to show in the result list |
+| `country_filter` | `String`   |  optional | null | Set country code as an [ISO 3166-1 alpha-2]https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 2 letter code  |
+| `count`          | `Number`   |  optional | 50 | Number of items to retrieve from API |
+| `direction`      | `String`   |  optional | ltr | default is `ltr`, can be set to `rtl` e.g. for Arabic |
+| `placeholder`    | `String`   |  optional |  | Sets the placeholder text of the input field (default is `placeholder: 'e.g. lock.spout.radar'). |
+| `validate`       | `Boolean`  |  optional | true | _TBD_ Adds validation input using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
 
 
 ## Building
