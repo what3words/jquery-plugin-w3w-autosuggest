@@ -169,8 +169,8 @@
               // }
               return [
                 '<div class="list-inner">',
-                '<span class="twa-flag"><img src="' + _self.options.path_to_flags +
-                '{{country}}.png"></span>',
+                '<span class="twa-flag w3w-flags-{{country}}">',
+                '</span>',
                 '<span class="twa">{{words}}</span>', '<br>', '<span class="info">',
                 '{{place}}</span>', '</div>'
               ].join('\n');
@@ -190,10 +190,10 @@
                   data.lang = _self.options.lang;
                 }
                 // if method is autosuggest, lang is mandatory and set default to 'en'
-                if (!_self.options.use_multilingual && typeof data.lang === 'undefined') {
+                if (!_self.options.multilingual && typeof data.lang === 'undefined') {
                   data.lang = 'en';
                 }
-                var autosuggest = _self.options.use_multilingual ? 'autosuggest-ml' : 'autosuggest';
+                var autosuggest = _self.options.multilingual ? 'autosuggest-ml' : 'autosuggest';
                 return {
                   type: 'GET',
                   url: _self._api_end_point + autosuggest,
@@ -378,12 +378,11 @@
     count: 50,
     results: 3,
     lang: null,
-    use_multilingual: true,
+    multilingual: true,
     direction: 'ltr',
     placeholder: 'e.g. lock.spout.radar',
     validation: true,
     validate: true,
-    valid_error: 'Please enter a valid 3 word address.',
-    path_to_flags: 'images/flags/'
+    valid_error: 'Please enter a valid 3 word address.'
   };
 }));
