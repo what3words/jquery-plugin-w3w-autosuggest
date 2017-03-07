@@ -254,8 +254,13 @@
                 $(_self.element).closest('.typeahead__query').addClass('valid');
               }
             }
+          },
+          onCancel: function (node, event) {
+            if (_self.options.validation) {
+              $(_self.element).closest('.typeahead__container').nextAll('.w3w__validation').empty();
+            }
           }
-        }
+        } // callback
       });
     },
 
@@ -382,7 +387,6 @@
     direction: 'ltr',
     placeholder: 'e.g. lock.spout.radar',
     validation: true,
-    validate: true,
     valid_error: 'Please enter a valid 3 word address.'
   };
 }));
