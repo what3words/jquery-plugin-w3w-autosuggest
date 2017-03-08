@@ -4,7 +4,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('js-build', ['jsminify', 'js-bundle-min']);
+gulp.task('js-build', ['lint', 'jsminify', 'js-bundle-min']);
 
 gulp.task('jsminify', function () {
   return gulp.src(['src/js/jquery.w3w-autosuggest-plugin.js'])
