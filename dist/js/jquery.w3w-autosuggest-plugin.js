@@ -137,6 +137,7 @@
         source: {
           autosuggest: {
             filter: function (item, displayKey) {
+              // apply a filter on the item.country property
               var selectedCountry = _self.options.country_filter;
               if (selectedCountry !== null) {
                 // Debug info
@@ -210,6 +211,7 @@
         callback: {
           onSearch: function (node, query) {
             counter = 0; // Reset counter on every new search
+            $(_self.element).attr('aria-invalid', true);
           },
           onInit: function (node) {
             // Debug
@@ -244,7 +246,7 @@
             }
           },
           onNavigateAfter: function (node, lis, a, item, query, event) {
-            if (typeof item.words === 'undefined') {
+            if (typeof item === 'undefined' || typeof item.words === 'undefined') {
               // marks input as a valid 3wa
               $(_self.element).attr('aria-invalid', true);
             } else {
@@ -267,7 +269,7 @@
               };
               validationTypingTimer = setTimeout(clearValidationMark, 500);
             }
-            if (typeof item.words === 'undefined') {
+            if (typeof item === 'undefined' || typeof item.words === 'undefined') {
               $(_self.element).attr('aria-invalid', true);
             } else {
               $(_self.element).attr('aria-invalid', false);
@@ -294,7 +296,7 @@
         console.log('Validating the w3wAddress field');
       }
 
-      var noMatch = false;
+      var noMatchingCountry = false;
 
       var _self = this;
 
@@ -345,7 +347,8 @@
           return isSuccess;
         }
       }, function () {
-        if (noMatch === true) {
+        // not implemented yet
+        if (noMatchingCountry === true) {
           return _self.options.valid_country_error;
         } else {
           return _self.options.valid_error;
@@ -359,7 +362,7 @@
 
       var typingTimer; // timer identifier
       var doneTypingInterval = 500;
-      var regex = /^(\D{3,})\.(\D{3,})\.(\D{3,})$/i;
+      var regex = /^(\D{1,})\.(\D{1,})\.(\D{1,})$/i;
 
       // Init validation
       $(this.element).closest('form').validate({

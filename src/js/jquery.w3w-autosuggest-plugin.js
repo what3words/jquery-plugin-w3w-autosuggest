@@ -347,6 +347,7 @@
           return isSuccess;
         }
       }, function () {
+        // not implemented yet
         if (noMatchingCountry === true) {
           return _self.options.valid_country_error;
         } else {
