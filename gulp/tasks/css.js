@@ -23,7 +23,7 @@ gulp.task('minify-css', ['sass'], function () {
 });
 
 gulp.task('sass', function (done) {
-  var input = ['./src/css/scss/**/*.scss'];
+  var input = ['./src/scss/**/*.scss'];
   var output = './dist/css/';
 
   var sassOptions = {
