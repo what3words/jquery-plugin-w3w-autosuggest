@@ -3,8 +3,7 @@
  * Copyright (C) 2017 what3words Limited
  * Licensed under the MIT license
  *
- * @author Jozsef Francovszky
- * @author Arnaud Ferrand
+ * @author what3words
  * @version 1.2.0
  * @link https://github.com/what3words/jquery-plugin-w3w-autosuggest
  */
