@@ -1,12 +1,12 @@
 /*!
- * jQuery w3w-autosuggest
+ * what3words autosuggest jQuery plugin
  * Copyright (C) 2017 what3words Limited
  * Licensed under the MIT license
  *
  * @author Jozsef Francovszky
  * @author Arnaud Ferrand
  * @version 1.2.0
- * @link
+ * @link https://github.com/what3words/jquery-plugin-w3w-autosuggest
  */
 
 (function (factory) {
@@ -49,15 +49,17 @@
     this._name = pluginName;
     this._defaults = $.fn.w3wAddress.defaults;
     this.options = $.extend({}, this._defaults, options);
-
     this.init();
   };
 
   $.extend(AutoSuggest.prototype, {
 
     init: function () {
+      // adds DOM elements arount input
       this.buildWrappers();
+      // wire the typeahead plugin
       this.autoSuggest();
+      // wire the validation plugin
       this.validation();
     },
 
@@ -77,7 +79,7 @@
       ).after('<div class="w3w__validation"></div>');
 
       $(this.element).addClass('w3w_valid').attr('placeholder', this.options.placeholder + ' ').attr(
-        'autocomplete', 'off').attr('dir', 'auto');
+        'autocomplete', 'off').attr('dir', 'auto').attr('aria-invalid', 'true');
     },
 
     bindEvents: function () {
@@ -120,6 +122,7 @@
 
       var _self = this;
       var counter = 0;
+      var validationTypingTimer; // timer identifier
 
       $.typeahead({
         debug: true,
@@ -163,16 +166,13 @@
             },
             display: ['words'],
             template: function (query, item) {
-              // var addDistanceInfo = '';
-              // if (item.distance) {
-              //   addDistanceInfo = '{{distance}} km, ';
-              // }
               return [
                 '<div class="list-inner">',
                 '<span class="twa-flag w3w-flags-{{country}}">',
                 '</span>',
-                '<span class="twa">{{words}}</span>', '<br>', '<span class="info">',
-                '{{place}}</span>', '</div>'
+                '<span class="twa">{{words}}</span>', '<br>',
+                '<span class="info">', '{{place}}', '</span>',
+                '</div>'
               ].join('\n');
             },
             ajax: function (query) {
@@ -201,9 +201,7 @@
                   path: 'suggestions'
                 };
               } else {
-                // workaround to cancel request:
-                // fire a internal error but prevent ajax request
-                // and no error logged in console
+                // cancel request
                 return false;
               }
             } // end ajax-autosuggest
@@ -245,6 +243,14 @@
               console.log(text);
             }
           },
+          onNavigateAfter: function (node, lis, a, item, query, event) {
+            if (typeof item.words === 'undefined') {
+              // marks input as a valid 3wa
+              $(_self.element).attr('aria-invalid', true);
+            } else {
+              $(_self.element).attr('aria-invalid', false);
+            }
+          },
           onClickAfter: function (node, a, item, event) {
             if (_self.options.validation) {
               // validate field when result being clicked
@@ -253,24 +259,37 @@
               if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
                 $(_self.element).closest('.typeahead__query').addClass('valid');
               }
+              clearTimeout(validationTypingTimer);
+              // user is "finished typing," run regex and validate
+              var clearValidationMark = function () {
+                // remove valid mark every time
+                $(_self.element).closest('.typeahead__query').removeClass('valid');
+              };
+              validationTypingTimer = setTimeout(clearValidationMark, 500);
+            }
+            if (typeof item.words === 'undefined') {
+              $(_self.element).attr('aria-invalid', true);
+            } else {
+              $(_self.element).attr('aria-invalid', false);
             }
           },
           onCancel: function (node, event) {
             if (_self.options.validation) {
               $(_self.element).closest('.typeahead__container').nextAll('.w3w__validation').empty();
             }
+            $(_self.element).attr('aria-invalid', true);
           }
         } // callback
       });
     },
 
     validation: function () {
-      // Return, don't run validation if Option set to false
+      // Return, don't run validation if Options set validation to false
       if (this.options.validation === false) {
         return;
       }
 
-      // Debug
+      // log Debug
       if (this.options.debug) {
         console.log('Validating the w3wAddress field');
       }
@@ -283,6 +302,7 @@
       $.validator.addMethod('w3w_valid', function (value, element) {
         // IF empty
         if (this.optional(element) || value.replace(/ /g, '') === '') {
+          // send valid for empty
           return true;
         } else {
           // IF has content
@@ -290,24 +310,37 @@
           var twaRegex = (/^(\D{3,})\.(\D{3,})\.(\D{3,})$/i);
           var m = twaRegex.exec(value);
           if (m !== null) {
-            $.ajax({
-              url: _self._api_end_point + 'forward',
-              type: 'GET',
-              async: false,
-              data: {
-                addr: value,
-                key: _self.options.key,
-                format: 'json'
-              },
-              dataType: 'json',
-              success: function (result) {
-                var response = result;
-                // If W3A is VALID
-                if (response.hasOwnProperty('geometry')) {
+            // check from result list first
+            var suggestions = $(element).closest('.typeahead__container').find('span.twa');
+            if (typeof suggestions !== 'undefined' && suggestions.length > 0) {
+              for (var i = 0; i < suggestions.length && !isSuccess; i++) {
+                if (suggestions[i].innerText === value) {
                   isSuccess = true;
                 }
-              } // end success
-            });
+              }
+            }
+            // still not a sucess ?
+            if (!isSuccess) {
+              // check with a forward geocoding
+              $.ajax({
+                url: _self._api_end_point + 'forward',
+                type: 'GET',
+                async: false,
+                data: {
+                  addr: value,
+                  key: _self.options.key,
+                  format: 'json'
+                },
+                dataType: 'json',
+                success: function (result) {
+                  var response = result;
+                  // If W3A is VALID
+                  if (response.hasOwnProperty('geometry')) {
+                    isSuccess = true;
+                  }
+                } // end success
+              });
+            }
           }
           return isSuccess;
         }
@@ -326,7 +359,7 @@
 
       var typingTimer; // timer identifier
       var doneTypingInterval = 500;
-      var regex = /^(\D{1,})\.(\D{1,})\.(\D{1,})$/i;
+      var regex = /^(\D{3,})\.(\D{3,})\.(\D{3,})$/i;
 
       // Init validation
       $(this.element).closest('form').validate({
@@ -382,11 +415,12 @@
     debug: false,
     count: 50,
     results: 3,
-    lang: null,
+    lang: 'en',
     multilingual: true,
     direction: 'ltr',
     placeholder: 'e.g. lock.spout.radar',
     validation: true,
-    valid_error: 'Please enter a valid 3 word address.'
+    valid_error: 'Please enter a valid 3 word address.',
+    typeaheadDelay: 300
   };
 }));
