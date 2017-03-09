@@ -12,7 +12,8 @@ var minify = function (source, destination) {
     .pipe(gulp.dest('dist/js'))
     .pipe(rename(destination))
     .pipe(uglify({
-      outSourceMap: true
+      outSourceMap: true,
+      preserveComments: 'license'
     }))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist/js'));
@@ -25,7 +26,7 @@ gulp.task('jsminify', ['lint'], function () {
 
 gulp.task('js-bundle-min', ['js-bundle'], function () {
   return minify('dist/js/jquery.w3w-autosuggest-plugin.bundle.js',
-  'jquery.w3w-autosuggest-plugin.bundle.min.js');
+    'jquery.w3w-autosuggest-plugin.bundle.min.js');
 });
 
 gulp.task('js-bundle', ['lint'], function () {
