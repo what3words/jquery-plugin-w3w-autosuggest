@@ -14,3 +14,9 @@ gulp.task('clean-dist', function () {
     'dist'
   ]);
 });
+
+gulp.task('clean-osx', function () {
+  return del([
+    '**/.DS_Store'
+  ]);
+});
