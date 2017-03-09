@@ -1,4 +1,4 @@
-# <img src="https://what3words.com/assets/images/w3w_square_red.png" width="32" height="32" alt="what3words">&nbsp;what3words Autosuggest jQuery plugin
+# <img src="https://what3words.com/assets/images/w3w_square_red.png" width="32" height="32" alt="what3words">&nbsp;what3words autosuggest jQuery plugin
 Easily capture 3 word addresses on your website with the *3 word address validation* JQuery plugin by what3words.
 
 what3words is a global addressing system. It has divided the world into a grid of 3m x 3m squares and assigned each one a unique 3 word address. what3words is more accurate than traditional street addressing, and even allows location information to be captured for places without addresses, such as parks or beaches.
@@ -15,7 +15,7 @@ The `autosuggest` results are displayed in the same way as the search box on [m
 
 The resulting candidate list contains the 3 word address, the nearest place to that address.
 
-While `autosuggest` uses the `clipping` parameter to determine the geographical boundary of results, the plugin makes use of a `country_selector` This allows you to more easily limit results to a specific country. Please note that using the `country_selector` may impact the number of results returned to the user.
+While `autosuggest` uses the `clipping` parameter to determine the geographical boundary of results, the plugin makes use of a `country_filter` This allows you to more easily limit results to a specific country. Please note that using the `country_filter` may impact the number of results returned to the user.
 
 
 # Getting Started
@@ -30,19 +30,19 @@ Make sure to include jQuery in your page:
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 ```
 
-Include JQuery pllugin bundled with jquery-typeahead plugin
+Include the what3words plugin files from the `./dist` folder into your HTML source:
+
+Include JQuery plugin bundled with jquery-typeahead and jquery-validation plugins
 ```markup
-<script src="https://assets.what3words.com/js/jquery.w3w-autosuggest-plugin.bundle.min.js"></script>
+<script src="[path-to-plugin]/js/jquery.w3w-autosuggest-plugin.bundle.min.js"></script>
 ```
 
 or separately
 ```
-<script src="path/to/jquery.typeahead.min.js"></script>
-<script src="https://assets.what3words.com/js/jquery.w3w-autosuggest-plugin.min.js"></script>
+<script src="path/to/jquery.typeahead"></script>
+<script src="path/to/jquery.validation"></script>
+<script src="[path-to-plugin]/js/jquery.w3w-autosuggest-plugin.min.js"></script>
 ```
-
-
-Include the what3words plugin files from the `./dist` folder into your HTML source:
 
 Add the CSS to the  `<header>`:
 ```
@@ -98,14 +98,20 @@ Parameters to be passed to the AutoSuggest plugin.
 | `key`          | `String`   | mandatory | | Your API key |
 | `debug`        | `Boolean`  |  optional | false | Enables debug info in console |
 | `multilingual` | `Boolean`  |  optional | true |  Enables the multilingual variant of autosuggest |
-| `lang`         | `String`   |  optional | see description | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code. Default is `en` if `multilingual` is `false` |
+| `lang`         | `String`   |  optional | `en` | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code. |
 | `results`        | `Number`   |  optional | 3 | Number of items to show in the result list |
 | `country_filter` | `String`   |  optional | null | Set country code as an [ISO 3166-1 alpha-2]https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 2 letter code  |
 | `count`          | `Number`   |  optional | 50 | Number of items to retrieve from API |
 | `direction`      | `String`   |  optional | ltr | default is `ltr`, can be set to `rtl` e.g. for Arabic |
 | `placeholder`    | `String`   |  optional |  | Sets the placeholder text of the input field (default is `placeholder: 'e.g. lock.spout.radar'). |
-| `validate`       | `Boolean`  |  optional | true | _TBD_ Adds validation input using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
+| `validation`       | `Boolean`  |  optional | true | _TBD_ Adds UI validation result using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
+| `typeaheadDelay`       | `Number`  |  optional | 500 | _TBD_ delay in ms before sending new API request  |
 
+## NOTES
+the attribute `aria-invalid` is used even if validation is set to false. Without `validation`, selecting a 3 word address from the result list ensure the address is valid.
+For references see:
+- 1 : https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-invalid_attribute
+- 2 : https://www.w3.org/TR/wai-aria/states_and_properties#aria-invalid
 
 ## Building
 
