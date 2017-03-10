@@ -20,39 +20,44 @@ While `autosuggest` uses the `clipping` parameter to determine the geographical 
 
 # Getting Started
 
-### _TBD_ Prerequisites
+### Prerequisites
 - jQuery 1.7.2 and above because of .on event handler
+
+### Dependencies
+The plugin uses these dependencies.
 - jquery-Typeahead plugin 2.8.0 https://www.npmjs.com/package/jquery-typeahead
 - jquery-validation plugin  1.16.0 https://www.npmjs.com/package/jquery-validation
+Distribution contains a bundle version including these libraries:
 
-Make sure to include jQuery in your page:
-```markup
+### Using the plugin
+Make sure to include jQuery in your page, for example:
+```html
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 ```
 
 Include the what3words plugin files from the `./dist` folder into your HTML source:
 
 Include JQuery plugin bundled with jquery-typeahead and jquery-validation plugins
-```markup
+```html
 <script src="[path-to-plugin]/js/jquery.w3w-autosuggest-plugin.bundle.min.js"></script>
 ```
 
 or separately
-```
+```html
 <script src="path/to/jquery.typeahead"></script>
 <script src="path/to/jquery.validation"></script>
 <script src="[path-to-plugin]/js/jquery.w3w-autosuggest-plugin.min.js"></script>
 ```
 
 Add the CSS to the  `<header>`:
-```
+```html
 <link rel="stylesheet" href="[path-to-plugin]/css/jquery.w3w-autosuggest-plugin.css">
 ```
 
 You'll need to [register](https://what3words.com/register?dev=true) for a what3words API key to access AutoSuggest. The key should be passed to a new instance of the plugin which is initialised on an input field. Initialisation should preferably occur after jQuery and before the </body> tag.
 
 
-```
+```javascript
 <script>
  $('#w3w-address').w3wAddress({
   key: 'YOUR-API-KEY-HERE'
@@ -83,7 +88,7 @@ You will only receive results back if the partial 3 word address string you subm
 
 The `lang` parameter is mandatory for `autosuggest`; we recommend that you set this according to the language of your user interface, or the browser/device language of your user. If your software displays 3 word addresses to users (in addition to accepting 3 words as a search/input) then we recommend you set the `lang` parameter for this method to the same language that 3 word addresses are displayed to your users.
 
-You can use the what3words [Get Languages API](https://docs.what3words.com/api/v2/#lang) method for a list of all currently loaded and available 3 word address languages.
+You can use the what3words API [Get Languages](https://docs.what3words.com/api/v2/#lang) method for a list of all currently loaded and available 3 word address languages.
 
 ### Results
  By default, 3 results are displayed with a 50 background suggestions available to filter by country.
@@ -104,8 +109,8 @@ Parameters to be passed to the AutoSuggest plugin.
 | `count`          | `Number`   |  optional | 50 | Number of items to retrieve from API |
 | `direction`      | `String`   |  optional | ltr | default is `ltr`, can be set to `rtl` e.g. for Arabic |
 | `placeholder`    | `String`   |  optional |  | Sets the placeholder text of the input field (default is `placeholder: 'e.g. lock.spout.radar'). |
-| `validation`       | `Boolean`  |  optional | true | _TBD_ Adds UI validation result using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
-| `typeaheadDelay`       | `Number`  |  optional | 500 | _TBD_ delay in ms before sending new API request  |
+| `validation`       | `Boolean`  |  optional | true | Adds UI validation result using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
+| `typeaheadDelay`       | `Number`  |  optional | 500 | delay in ms before sending new API request  |
 
 ## NOTES
 the attribute `aria-invalid` is used even if validation is set to false. Without `validation`, selecting a 3 word address from the result list ensure the address is valid.
@@ -117,7 +122,6 @@ For references see:
 
 ### Prerequisites
 - node, gulp
-- ~glue~
 
 ### Set up
 ```
@@ -149,27 +153,14 @@ The build process is automatic using `gulp watch`. Gulp is watching for Javascri
 To add or customise styling, set up the development environment, and simply edit / add SCSS files in `./src` folder.
 
 
-<!-- ### glue
-
-`glue` is used to assemble flag image files into a sprite css. This task is already done.
-sprite and result scss file are in `src/images/sprite`
-
-to run this task :
-- install `glue` http://glue.readthedocs.io/en/latest/installation.html
-- `npm i gulp-glue`
-
-and then run gulp task image :
-
->`gulp images`. -->
-
 ### sprite
-Manual task done:
+What was done:
 - upload images from ./src/images/flags into http://responsive-css.us/ ,
 - save sprite and css in src/images/sprite
 - use https://tinypng.com/ to shrink image weight
 
 # Revision History
 
-* `v1.2.0` TBD      - refactoring plugin : tidying up dependencies, building single and bundle distribution files. Parameters : `multilingual` replace `auto_detect_lang`, `country_filter` replaces `country_selector` using only an ISO_3166-1_alpha-2 code, adds setters
+* `v1.2.0` 10/03/17 - refactoring plugin : tidying up dependencies, building single and bundle distribution files. Parameters : `multilingual` replace `auto_detect_lang`, `country_filter` replaces `country_selector` using only an ISO_3166-1_alpha-2 code
 * `v1.1.0` 13/02/17 - uses API method `autosuggest-ml` with number of background results increased to 50
 * `v1.0.0` 07/02/17 - Initial release
