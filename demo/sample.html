@@ -24,6 +24,10 @@ body {
   padding: 40px 15px;
 }
 
+.nav-tabs {
+  margin-top: 20px;
+}
+
 </style>
 
 <body>
@@ -52,6 +56,7 @@ body {
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#multilingual" aria-controls="multilingual" role="tab" data-toggle="tab">multilingual</a></li>
       <li role="presentation"><a href="#autosuggest" aria-controls="autosuggest" role="tab" data-toggle="tab">autosuggest classic</a></li>
+      <li role="presentation"><a href="#noform" aria-controls="noform" role="tab" data-toggle="tab">without form</a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -133,8 +138,19 @@ body {
           </div>
         </div>
       </div>
+      <!-- /.autosuggest -->
+      <div role="tabpanel" class="tab-pane" id="noform">
+        <div class="panel demo">
+          <div class="panel-body">
+            <h2>validation <small>not working</small></h2>
+            <div class="form-row">
+              <input type="text" class="w3w-address-field" id="noform-valid">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.noform -->
     </div>
-    <!-- /.autosuggest -->
     <div style="margin: 150px;">&nbsp;</div>
   </div>
   <!-- /.container -->
@@ -154,7 +170,7 @@ body {
   $('#ml-country-gb').w3wAddress({
     key: key,
     results: 5,
-    country_filter : 'gb'
+    country_filter: 'gb'
   });
 
   $('.ml-demo').w3wAddress({
@@ -188,7 +204,12 @@ body {
     results: 5,
     multilingual: false,
     lang: 'en',
-    country_filter : 'gb'
+    country_filter: 'gb'
+  });
+
+  $('#noform-valid').w3wAddress({
+    key: key,
+    results: 5
   });
 
   </script>
