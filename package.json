@@ -1,21 +1,21 @@
 {
   "name": "jquery-plugin-w3w-autosuggest",
-  "version": "1.2.0",
-  "description": "",
+  "version": "1.2.1",
+  "description": "Easily capture 3 word addresses on your website with the 3 word address JQuery plugin by what3words",
   "main": "jquery-plugin-w3w-autosuggest.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w3w-internal/jquery-plugin-w3w-autosuggest.git"
+    "url": "git+https://github.com/what3words/jquery-plugin-w3w-autosuggest.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/w3w-internal/jquery-plugin-w3w-autosuggest/issues"
+    "url": "https://github.com/what3words/jquery-plugin-w3w-autosuggest/issues"
   },
-  "homepage": "https://github.com/w3w-internal/jquery-plugin-w3w-autosuggest#readme",
+  "homepage": "https://github.com/what3words/jquery-plugin-w3w-autosuggest#readme",
   "dependencies": {
     "jquery": "2.1.1",
     "jquery-typeahead": "^2.8.0",

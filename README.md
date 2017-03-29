@@ -161,6 +161,7 @@ What was done:
 
 # Revision History
 
+* `v1.2.1` 29/03/17 - prevent warning message on ajax request and test closest form for validation
 * `v1.2.0` 10/03/17 - refactoring plugin : tidying up dependencies, building single and bundle distribution files. Parameters : `multilingual` replace `auto_detect_lang`, `country_filter` replaces `country_selector` using only an ISO_3166-1_alpha-2 code
 * `v1.1.0` 13/02/17 - uses API method `autosuggest-ml` with number of background results increased to 50
 * `v1.0.0` 07/02/17 - Initial release

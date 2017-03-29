@@ -4,7 +4,7 @@
  * Licensed under the MIT license
  *
  * @author what3words
- * @version 1.2.0
+ * @version 1.2.1
  * @link https://github.com/what3words/jquery-plugin-w3w-autosuggest
  */
 
@@ -255,18 +255,22 @@
           onClickAfter: function (node, a, item, event) {
             if (_self.options.validation) {
               // validate field when result being clicked
-              $(_self.element).closest('form').validate().element('.w3w_valid');
-              $(_self.element).closest('.typeahead__container').nextAll('.w3w__validation').empty();
-              if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
-                $(_self.element).closest('.typeahead__query').addClass('valid');
+              var form = $(_self.element).closest('form');
+              if (form.length && form.length > 0) {
+                form.validate().element('.w3w_valid');
+
+                $(_self.element).closest('.typeahead__container').nextAll('.w3w__validation').empty();
+                if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
+                  $(_self.element).closest('.typeahead__query').addClass('valid');
+                }
+                clearTimeout(validationTypingTimer);
+                // user is "finished typing," run regex and validate
+                var clearValidationMark = function () {
+                  // remove valid mark every time
+                  $(_self.element).closest('.typeahead__query').removeClass('valid');
+                };
+                validationTypingTimer = setTimeout(clearValidationMark, 500);
               }
-              clearTimeout(validationTypingTimer);
-              // user is "finished typing," run regex and validate
-              var clearValidationMark = function () {
-                // remove valid mark every time
-                $(_self.element).closest('.typeahead__query').removeClass('valid');
-              };
-              validationTypingTimer = setTimeout(clearValidationMark, 500);
             }
             if (typeof item === 'undefined' || typeof item.words === 'undefined') {
               $(_self.element).attr('aria-invalid', true);
@@ -326,7 +330,7 @@
               $.ajax({
                 url: _self._api_end_point + 'forward',
                 type: 'GET',
-                async: false,
+                // async: false,
                 data: {
                   addr: value,
                   key: _self.options.key,
@@ -363,32 +367,36 @@
       var doneTypingInterval = 500;
       var regex = /^(\D{1,})\.(\D{1,})\.(\D{1,})$/i;
 
-      // Init validation
-      $(this.element).closest('form').validate({
-        onfocusout: false,
-        onkeyup: function (element) {
-          if ($(element).hasClass('w3w_valid')) {
-            clearTimeout(typingTimer);
+      var form = $(this.element).closest('form');
+      if (form.length && form.length > 0) {
+        // Init validation
+        form.validate({
+          // $(this.element).validate({
+          onfocusout: false,
+          onkeyup: function (element) {
+            if ($(element).hasClass('w3w_valid')) {
+              clearTimeout(typingTimer);
 
-            // user is "finished typing," run regex and validate
-            var doneTyping = function () {
-              // remove valid mark every time
-              $(element).closest('.typeahead__query').removeClass('valid');
+              // user is "finished typing," run regex and validate
+              var doneTyping = function () {
+                // remove valid mark every time
+                $(element).closest('.typeahead__query').removeClass('valid');
 
-              // Only check for validation when regex match
-              if (regex.test($(element).val())) {
-                $(element).valid();
-              }
-            };
+                // Only check for validation when regex match
+                if (regex.test($(element).val())) {
+                  $(element).valid();
+                }
+              };
 
-            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+              typingTimer = setTimeout(doneTyping, doneTypingInterval);
+            }
+          },
+          errorPlacement: function (error, element) {
+            var valid_container = element.closest('.typeahead__container');
+            error.appendTo(valid_container.siblings('.w3w__validation'));
           }
-        },
-        errorPlacement: function (error, element) {
-          var valid_container = element.closest('.typeahead__container');
-          error.appendTo(valid_container.siblings('.w3w__validation'));
-        }
-      });
+        });
+      }
     }
   });
 
