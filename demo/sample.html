@@ -9,16 +9,35 @@
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- include plugin's CSS -->
-  <link rel="stylesheet" href="../dist/css/jquery.w3w-autosuggest-plugin.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.selectric/1.11.1/selectric.css">
+  <link rel="stylesheet" href="../dist/css/jquery.w3w-autosuggest-plugin.bundle.css">
+  <!-- <link rel="stylesheet" href="./jquery.typeahead.min.css"> -->
 </head>
 <style>
 body {
   padding-top: 50px;
 }
 
-.form-row {
+
+/*.form-row {
   max-width: 325px;
 }
+
+.typeahead__field input {
+  max-width: 325px;
+}
+
+#countryInput {
+  max-width: 375px;
+}
+
+.selectric {
+  width: 160px;
+}
+
+div.selectric>span {
+  text-align: left;
+}*/
 
 .demo {
   padding: 40px 15px;
@@ -26,6 +45,10 @@ body {
 
 .nav-tabs {
   margin-top: 20px;
+}
+
+.form-group {
+  vertical-align: top !important;
 }
 
 </style>
@@ -56,6 +79,7 @@ body {
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#multilingual" aria-controls="multilingual" role="tab" data-toggle="tab">multilingual</a></li>
       <li role="presentation"><a href="#autosuggest" aria-controls="autosuggest" role="tab" data-toggle="tab">autosuggest classic</a></li>
+      <li role="presentation"><a href="#countryfilter" aria-controls="noform" role="tab" data-toggle="tab">country filter</a></li>
       <li role="presentation"><a href="#noform" aria-controls="noform" role="tab" data-toggle="tab">without form</a></li>
     </ul>
     <!-- Tab panes -->
@@ -63,7 +87,7 @@ body {
       <div role="tabpanel" class="tab-pane active" id="multilingual">
         <div class="panel demo">
           <div class="panel-body">
-            <h2>validation</h2>
+            <h2>using validation-plugin</h2>
             <form>
               <div class="form-row">
                 <input type="text" class="w3w-address-field" id="ml-one">
@@ -73,27 +97,18 @@ body {
         </div>
         <div class="panel demo">
           <div class="panel-body">
-            <h2>validation country_filter=gb</h2>
-            <form>
-              <div class="form-row">
-                <input type="text" class="w3w-address-field" id="ml-country-gb">
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="panel demo">
-          <div class="panel-body">
-            <h2>no-validation-plugin</h2>
+            <h2>not using validation-plugin</h2>
             <form>
               <div class="form-row">
                 <input type="text" class="w3w-address-field" id="ml-no-validation">
               </div>
+              <h3><small><code>aria-invalid</code> attribute is set when selecting a suggestion</small></h3>
             </form>
           </div>
         </div>
         <div class="panel demo">
           <div class="panel-body">
-            <h2>two inputs (applied on css class)</h2>
+            <h2>using two inputs (applied on css class)</h2>
             <form>
               <div class="form-row">
                 <input type="text" name="billing-address" class="w3w-address-field ml-demo">
@@ -109,8 +124,8 @@ body {
       <div role="tabpanel" class="tab-pane" id="autosuggest">
         <div class="panel demo">
           <div class="panel-body">
-            <h2>autosuggest lang=en validation</h2>
-            <form action="" id="randomForm">
+            <h2>using validation-plugin</h2>
+            <form action="" id="">
               <div class="form-row">
                 <input type="text" class="w3w-address-field" id="autosuggest-en-val">
               </div>
@@ -119,33 +134,110 @@ body {
         </div>
         <div class="panel demo">
           <div class="panel-body">
-            <h2>autosuggest lang=en no-validation-plugin</h2>
-            <form action="" id="randomForm">
+            <h2>not using validation-plugin</h2>
+            <form action="" id="">
               <div class="form-row">
                 <input type="text" class="w3w-address-field" id="autosuggest-en-no-val">
               </div>
-            </form>
-          </div>
-        </div>
-        <div class="panel demo">
-          <div class="panel-body">
-            <h2>autosuggest lang=en validation country_filter=gb</h2>
-            <form action="" id="randomForm">
-              <div class="form-row">
-                <input type="text" class="w3w-address-field" id="autosuggest-en-gb">
-              </div>
+              <h3><small><code>aria-invalid</code> attribute is set when selecting a suggestion</small></h3>
             </form>
           </div>
         </div>
       </div>
       <!-- /.autosuggest -->
+      <div role="tabpanel" class="tab-pane" id="countryfilter">
+        <div class="panel demo">
+          <div class="panel-body">
+            <h2><code>country_filter</code> set to <code>gb</code></h2>
+            <form>
+              <div class="form-row">
+                <input type="text" class="w3w-address-field" id="country-fixed">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="panel demo">
+          <div class="panel-body">
+            <h2>dynamic <code>country_filter</code> from input type <code>select</code></h2>
+            <form action="" id="" class="">
+              <div class="form-group">
+                <label for="selectCountry">Country</label>
+                <select name="country" id="selectCountry" class="form-control">
+                  <option value="at" label="Austria">Austria</option>
+                  <option value="be" label="Belgium">Belgium</option>
+                  <option value="bg" label="Bulgaria">Bulgaria</option>
+                  <option value="hr" label="Croatia">Croatia</option>
+                  <option value="cy" label="Cyprus">Cyprus</option>
+                  <option value="cz" label="Czech Republic">Czech Republic</option>
+                  <option value="dk" label="Denmark">Denmark</option>
+                  <option value="ee" label="Estonia">Estonia</option>
+                  <option value="fi" label="Finland">Finland</option>
+                  <option value="fr" label="France">France</option>
+                  <option value="de" label="Germany">Germany</option>
+                  <option value="gr" label="Greece">Greece</option>
+                  <option value="hu" label="Hungary">Hungary</option>
+                  <option value="ie" label="Ireland">Ireland</option>
+                  <option value="it" label="Italy" selected="true">Italy</option>
+                  <option value="lv" label="Latvia">Latvia</option>
+                  <option value="lt" label="Lithuania">Lithuania</option>
+                  <option value="lu" label="Luxembourg">Luxembourg</option>
+                  <option value="mt" label="Malta">Malta</option>
+                  <option value="nl" label="Netherlands">Netherlands</option>
+                  <option value="pl" label="Poland">Poland</option>
+                  <option value="pt" label="Portugal">Portugal</option>
+                  <option value="ro" label="Romania">Romania</option>
+                  <option value="sk" label="Slovakia">Slovakia</option>
+                  <option value="si" label="Slovenia">Slovenia</option>
+                  <option value="es" label="Spain">Spain</option>
+                  <option value="se" label="Sweden">Sweden</option>
+                  <!-- done on #BrexitDay 29/03/2017 by bye UK -->
+                  <option value="gb" label="United Kingdom">United Kingdom</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="country-dyn-select">3wordaddress</label>
+                <input type="text" class="form-control w3w-address-field" id="country-dyn-select">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="panel demo">
+          <div class="panel-body">
+            <h2>dynamic <code>country_filter</code> from input type <code>hidden</code></h2>
+            <form action="" id="" class="">
+              <div class="form-group">
+                <label for="countryInput">Country</label>
+                <div class="typeahead__container">
+                  <div class="typeahead__field">
+                    <span class="typeahead__query">
+                          <input class="form-control"
+                                 id="countryInput"
+                                 name="countryInput"
+                                 type="search"
+                                 value="Italy"
+                                 autocomplete="off">
+                      </span>
+                    <input type="hidden" id="countryHidden" value="it">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="country-dyn-input">3wordaddress</label>
+                <input type="text" class="form-control w3w-address-field" id="country-dyn-input">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- /.countryfilter -->
       <div role="tabpanel" class="tab-pane" id="noform">
         <div class="panel demo">
           <div class="panel-body">
-            <h2>validation <small>not working</small></h2>
+            <h2>validation plugin <small>not working outside form</small></h2>
             <div class="form-row">
               <input type="text" class="w3w-address-field" id="noform-valid">
             </div>
+            <h3><small><code>aria-invalid</code> attribute is set when selecting a suggestion</small></h3>
           </div>
         </div>
       </div>
@@ -156,60 +248,215 @@ body {
   <!-- /.container -->
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.selectric/1.11.1/jquery.selectric.min.js"></script>
   <!-- include plugin's javascript -->
   <script src="../dist/js/jquery.w3w-autosuggest-plugin.bundle.js"></script>
   <!-- file defining YOUR API KEY -->
   <!-- var key = 'YOUR-API-KEY'; -->
   <script src="key.js"></script>
   <script>
-  $('#ml-one').w3wAddress({
-    key: key,
-    results: 5
-  });
+  $(function() {
+    $('#selectCountry').selectric();
 
-  $('#ml-country-gb').w3wAddress({
-    key: key,
-    results: 5,
-    country_filter: 'gb'
-  });
+    $('#ml-one').w3wAddress({
+      key: key,
+      // logo: false,
+      results: 5,
+      lang: 'en'
+    });
 
-  $('.ml-demo').w3wAddress({
-    key: key,
-    results: 5
-  });
+    $('.ml-demo').w3wAddress({
+      key: key,
+      results: 5,
+      lang: 'en'
+    });
 
-  $('#ml-no-validation').w3wAddress({
-    key: key,
-    results: 5,
-    validation: false,
-  });
+    $('#ml-no-validation').w3wAddress({
+      key: key,
+      results: 5,
+      validation: false,
+      lang: 'en'
+    });
 
-  $('#autosuggest-en-val').w3wAddress({
-    key: key,
-    results: 5,
-    multilingual: false,
-    lang: 'en'
-  });
+    $('#autosuggest-en-val').w3wAddress({
+      key: key,
+      results: 5,
+      multilingual: false,
+      lang: 'en'
+    });
 
-  $('#autosuggest-en-no-val').w3wAddress({
-    key: key,
-    results: 5,
-    multilingual: false,
-    lang: 'en',
-    validation: false
-  });
+    $('#autosuggest-en-no-val').w3wAddress({
+      key: key,
+      results: 5,
+      multilingual: false,
+      lang: 'en',
+      validation: false
+    });
 
-  $('#autosuggest-en-gb').w3wAddress({
-    key: key,
-    results: 5,
-    multilingual: false,
-    lang: 'en',
-    country_filter: 'gb'
-  });
+    $('#noform-valid').w3wAddress({
+      key: key,
+      results: 5,
+      lang: 'en'
+    });
 
-  $('#noform-valid').w3wAddress({
-    key: key,
-    results: 5
+    // to rename
+    $('#country-fixed').w3wAddress({
+      key: key,
+      results: 5,
+      country_filter: 'gb',
+      lang: 'en'
+    });
+
+    $('#country-dyn-select').w3wAddress({
+      key: key,
+      results: 5,
+      lang: 'en',
+      country_filter: '#selectCountry'
+    });
+
+    $('#country-dyn-input').w3wAddress({
+      key: key,
+      results: 5,
+      lang: 'en',
+      country_filter: '#countryHidden'
+    });
+
+    var eeCountries = [{
+        code: "at",
+        name: "Austria"
+      },
+      {
+        code: "be",
+        name: "Belgium"
+      },
+      {
+        code: "bg",
+        name: "Bulgaria"
+      },
+      {
+        code: "hr",
+        name: "Croatia"
+      },
+      {
+        code: "cy",
+        name: "Cyprus"
+      },
+      {
+        code: "cz",
+        name: "Czech Republic"
+      },
+      {
+        code: "dk",
+        name: "Denmark"
+      },
+      {
+        code: "ee",
+        name: "Estonia"
+      },
+      {
+        code: "fi",
+        name: "Finland"
+      },
+      {
+        code: "fr",
+        name: "France"
+      },
+      {
+        code: "de",
+        name: "Germany"
+      },
+      {
+        code: "gr",
+        name: "Greece"
+      },
+      {
+        code: "hu",
+        name: "Hungary"
+      },
+      {
+        code: "ie",
+        name: "Ireland"
+      },
+      {
+        code: "it",
+        name: "Italy"
+      },
+      {
+        code: "lv",
+        name: "Latvia"
+      },
+      {
+        code: "lt",
+        name: "Lithuania"
+      },
+      {
+        code: "lu",
+        name: "Luxembourg"
+      },
+      {
+        code: "mt",
+        name: "Malta"
+      },
+      {
+        code: "nl",
+        name: "Netherlands"
+      },
+      {
+        code: "pl",
+        name: "Poland"
+      },
+      {
+        code: "pt",
+        name: "Portugal"
+      },
+      {
+        code: "ro",
+        name: "Romania"
+      },
+      {
+        code: "sk",
+        name: "Slovakia"
+      },
+      {
+        code: "si",
+        name: "Slovenia"
+      },
+      {
+        code: "es",
+        name: "Spain"
+      },
+      {
+        code: "se",
+        name: "Sweden"
+      },
+      // done on #BrexitDay 29/03/2017 by bye UK
+      {
+        code: "gb",
+        name: "United Kingdom"
+      }
+      //
+    ];
+    $.typeahead({
+      input: '#countryInput',
+      order: 'asc',
+      searchOnFocus: true,
+      source: {
+        data: eeCountries,
+        display: 'name'
+      },
+      debug: true,
+      callback: {
+        onInit: function(node) {
+          console.log('Typeahead Initiated on ' + node.selector);
+        },
+        onClickAfter: function(node, a, item, event) {
+          $('#countryHidden').val(item['code']);
+        },
+        onCancel: function(node, event) {
+          $('#countryHidden').val('');
+        }
+      }
+    });
   });
 
   </script>

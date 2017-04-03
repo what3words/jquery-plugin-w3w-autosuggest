@@ -51,8 +51,15 @@ or separately
 
 Add the CSS to the  `<header>`:
 ```html
-<link rel="stylesheet" href="[path-to-plugin]/css/jquery.w3w-autosuggest-plugin.css">
+<link rel="stylesheet" href="[path-to-plugin]/css/jquery.w3w-autosuggest-plugin.bundle.min.css">
 ```
+
+or separately
+```html
+<link rel="stylesheet" href="path/to/jquery.typeahead.css">
+<link rel="stylesheet" href="[path-to-plugin]/css/jquery.w3w-autosuggest-plugin.min.css">
+```
+
 
 You'll need to [register](https://what3words.com/register?dev=true) for a what3words API key to access AutoSuggest. The key should be passed to a new instance of the plugin which is initialised on an input field. Initialisation should preferably occur after jQuery and before the </body> tag.
 
@@ -102,6 +109,7 @@ Parameters to be passed to the AutoSuggest plugin.
 | ---------------|------------|-----------|---------|----------------------|
 | `key`          | `String`   | mandatory | | Your API key |
 | `debug`        | `Boolean`  |  optional | false | Enables debug info in console |
+| `logo`         | `Boolean`  |  optional | true | displays what3words logo on the input as a svg image |
 | `multilingual` | `Boolean`  |  optional | true |  Enables the multilingual variant of autosuggest |
 | `lang`         | `String`   |  optional | `en` | A supported 3 word address language as an [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) 2 letter code. |
 | `results`        | `Number`   |  optional | 3 | Number of items to show in the result list |
@@ -161,6 +169,7 @@ What was done:
 
 # Revision History
 
+* `v1.3.0` TBD - fixes conflict with standard jquery-typeahead css,
 * `v1.2.1` 29/03/17 - prevent warning message on ajax request and test closest form for validation
 * `v1.2.0` 10/03/17 - refactoring plugin : tidying up dependencies, building single and bundle distribution files. Parameters : `multilingual` replace `auto_detect_lang`, `country_filter` replaces `country_selector` using only an ISO_3166-1_alpha-2 code
 * `v1.1.0` 13/02/17 - uses API method `autosuggest-ml` with number of background results increased to 50

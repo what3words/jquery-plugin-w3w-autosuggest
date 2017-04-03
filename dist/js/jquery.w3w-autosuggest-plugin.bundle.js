@@ -4,7 +4,7 @@
  * Licensed under the MIT license
  *
  * @author what3words
- * @version 1.2.1
+ * @version 1.3.0
  * @link https://github.com/what3words/jquery-plugin-w3w-autosuggest
  */
 
@@ -73,9 +73,13 @@
       $(this.element).wrapAll('<div class="typeahead__container ' + direction +
         '"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>');
 
-      $(this.element).closest('.typeahead__container').prepend(
-        '<img class="w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">'
-      ).after('<div class="w3w__validation"></div>');
+      if (this.options.logo) {
+        $(this.element).addClass('typeahead__padlogo');
+        $(this.element).closest('.typeahead__container').prepend(
+          '<img class="typeahead__w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">'
+        );
+      }
+      $(this.element).closest('.typeahead__container').after('<div class="w3w__validation"></div>');
 
       $(this.element).addClass('w3w_valid').attr('placeholder', this.options.placeholder + ' ').attr(
         'autocomplete', 'off').attr('dir', 'auto').attr('aria-invalid', 'true');
@@ -137,7 +141,26 @@
           autosuggest: {
             filter: function (item, displayKey) {
               // apply a filter on the item.country property
-              var selectedCountry = _self.options.country_filter;
+              var selectedCountry = null;
+              if (_self.options.country_filter !== null) {
+                if ($(_self.options.country_filter).get(0)) {
+                  // this is a dynamic filter from an input form
+                  selectedCountry = $(_self.options.country_filter).val();
+                  if (typeof selectedCountry === 'string') {
+                    selectedCountry = selectedCountry.toLowerCase();
+                  } else {
+                    selectedCountry = null;
+                  }
+                  // check value length ?
+                  if (typeof selectedCountry !== 'string' || selectedCountry.length !== 2) {
+                    selectedCountry = null;
+                  }
+                } else {
+                  if (typeof _self.options.country_filter === 'string' && _self.options.country_filter.length === 2) {
+                    selectedCountry = _self.options.country_filter.toLowerCase();
+                  }
+                }
+              }
               if (selectedCountry !== null) {
                 // Debug info
                 if (_self.options.debug) {
@@ -359,7 +382,7 @@
       });
 
       // Add Custom W3W validation to $validator
-      $.validator.addClassRules('w3w_valid', {
+      $.validator.addClassRules('typeahead__w3w_valid', {
         w3w_valid: true
       });
 
@@ -374,7 +397,7 @@
           // $(this.element).validate({
           onfocusout: false,
           onkeyup: function (element) {
-            if ($(element).hasClass('w3w_valid')) {
+            if ($(element).hasClass('typeahead__w3w_valid')) {
               clearTimeout(typingTimer);
 
               // user is "finished typing," run regex and validate
@@ -393,7 +416,7 @@
           },
           errorPlacement: function (error, element) {
             var valid_container = element.closest('.typeahead__container');
-            error.appendTo(valid_container.siblings('.w3w__validation'));
+            error.appendTo(valid_container.siblings('.typeahead__w3w__validation'));
           }
         });
       }
@@ -425,6 +448,7 @@
     debug: false,
     count: 50,
     results: 3,
+    logo: true,
     lang: 'en',
     multilingual: true,
     direction: 'ltr',

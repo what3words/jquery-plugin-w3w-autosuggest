@@ -13,7 +13,9 @@ gulp.task('flag-sprite', function () {
     .pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('minify-css', ['sass'], function () {
+gulp.task('minify-css', ['minify-css-plugin', 'minify-css-bundle']);
+
+gulp.task('minify-css-plugin', ['sass'], function () {
   return gulp.src('./dist/css/jquery.w3w-autosuggest-plugin.css')
     .pipe(rename('jquery.w3w-autosuggest-plugin.min.css'))
     // .pipe(sourcemaps.init())
@@ -22,8 +24,36 @@ gulp.task('minify-css', ['sass'], function () {
     .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('sass', function (done) {
-  var input = ['./src/scss/**/*.scss'];
+gulp.task('minify-css-bundle', ['sass'], function () {
+  return gulp.src('./dist/css/jquery.w3w-autosuggest-plugin.bundle.css')
+    .pipe(rename('jquery.w3w-autosuggest-plugin.bundle.min.css'))
+    // .pipe(sourcemaps.init())
+    .pipe(cleanCSS())
+    // .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('sass', ['sass-plugin', 'sass-bundle']);
+
+gulp.task('sass-plugin', function (done) {
+  var input = ['./src/scss/**/jquery.w3w-autosuggest-plugin.scss'];
+  var output = './dist/css/';
+
+  var sassOptions = {
+    errLogToConsole: true,
+    outputStyle: 'expanded'
+  };
+
+  return gulp.src(input)
+    // .pipe(sourcemaps.init())
+    .pipe(sass(sassOptions).on('error', sass.logError))
+    // .pipe(sourcemaps.write())
+    .pipe(autoprefixer())
+    .pipe(gulp.dest(output));
+});
+
+gulp.task('sass-bundle', function (done) {
+  var input = ['./src/scss/**/jquery.w3w-autosuggest-plugin.bundle.scss'];
   var output = './dist/css/';
 
   var sassOptions = {
