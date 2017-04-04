@@ -1,18 +1,31 @@
 .typeahead__list {
-  .twa {
-		font-size: 15px;
-	}
+  .typeahead__ {
+    &twa {
+      font-size: 15px;
+    }
 
-	.twa-flag {
-		float: left;
-		width: 30px;
-		height: 30px;
-		margin-right: 10px;
+    &twa-flag {
+      float: left;
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    &info {
+      display: block;
+      overflow: hidden;
+      font-size: 12px;
+    }
   }
+}
 
-	.info {
-		display: block;
-		overflow: hidden;
-		font-size: 12px;
-	}
+.typeahead__container {
+  &.rtl {
+    .typeahead__list {
+      .typeahead__twa-flag {
+        float: right;
+        margin-left: 10px;
+      }
+    }
+  }
 }

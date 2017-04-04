@@ -2,6 +2,7 @@
   .typeahead__padlogo {
     padding-left: 50px;
   }
+
   .typeahead__w3w-logo {
     max-width: 32px;
     position: absolute;
@@ -9,15 +10,16 @@
     top: 0;
     z-index: 3;
   }
+
   &.rtl {
-		.typeahead__w3w-logo {
-			right: 0;
-			left: auto;
-			top: 0;
-		}
+    .typeahead__w3w-logo {
+      right: 0;
+      left: auto;
+      top: 0;
+    }
+
     .typeahead__padlogo {
-      padding-right: 50px;
+      padding-right: 50px !important;
     }
   }
-
 }

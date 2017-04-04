@@ -14,30 +14,12 @@
   <!-- <link rel="stylesheet" href="./jquery.typeahead.min.css"> -->
 </head>
 <style>
+html {
+
+}
 body {
   padding-top: 50px;
 }
-
-
-/*.form-row {
-  max-width: 325px;
-}
-
-.typeahead__field input {
-  max-width: 325px;
-}
-
-#countryInput {
-  max-width: 375px;
-}
-
-.selectric {
-  width: 160px;
-}
-
-div.selectric>span {
-  text-align: left;
-}*/
 
 .demo {
   padding: 40px 15px;
@@ -81,6 +63,7 @@ div.selectric>span {
       <li role="presentation"><a href="#autosuggest" aria-controls="autosuggest" role="tab" data-toggle="tab">autosuggest classic</a></li>
       <li role="presentation"><a href="#countryfilter" aria-controls="noform" role="tab" data-toggle="tab">country filter</a></li>
       <li role="presentation"><a href="#noform" aria-controls="noform" role="tab" data-toggle="tab">without form</a></li>
+      <li role="presentation"><a href="#tabrtl" aria-controls="tabrtl" role="tab" data-toggle="tab">rtl</a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -233,15 +216,26 @@ div.selectric>span {
       <div role="tabpanel" class="tab-pane" id="noform">
         <div class="panel demo">
           <div class="panel-body">
-            <h2>validation plugin <small>not working outside form</small></h2>
+            <h2>validation plugin <small>is not working outside form</small></h2>
             <div class="form-row">
               <input type="text" class="w3w-address-field" id="noform-valid">
             </div>
-            <h3><small><code>aria-invalid</code> attribute is set when selecting a suggestion</small></h3>
+            <h3><small>but <code>aria-invalid</code> attribute is set when selecting a suggestion</small></h3>
           </div>
         </div>
       </div>
       <!-- /.noform -->
+      <div role="tabpanel" class="tab-pane" id="tabrtl">
+        <div class="panel demo">
+          <div class="panel-body">
+            <h2>direction RTL</h2>
+            <div class="form-row">
+              <input type="text" class="w3w-address-field" id="rtl-fixed">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.tabrtl -->
     </div>
     <div style="margin: 150px;">&nbsp;</div>
   </div>
@@ -320,6 +314,16 @@ div.selectric>span {
       lang: 'en',
       country_filter: '#countryHidden'
     });
+
+    $('#rtl-fixed').w3wAddress({
+      key: key,
+      logo: false,
+      results: 5,
+      lang: 'en',
+      direction: 'rtl'
+    });
+
+
 
     var eeCountries = [{
         code: "at",

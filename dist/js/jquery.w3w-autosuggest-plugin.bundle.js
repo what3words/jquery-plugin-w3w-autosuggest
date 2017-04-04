@@ -79,9 +79,10 @@
           '<img class="typeahead__w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">'
         );
       }
-      $(this.element).closest('.typeahead__container').after('<div class="w3w__validation"></div>');
-
-      $(this.element).addClass('w3w_valid').attr('placeholder', this.options.placeholder + ' ').attr(
+      if (this.options.validation) {
+        $(this.element).closest('.typeahead__container').after('<div class="typeahead__w3w_validation"></div>');
+      }
+      $(this.element).addClass('typeahead__w3w_valid').attr('placeholder', this.options.placeholder + ' ').attr(
         'autocomplete', 'off').attr('dir', 'auto').attr('aria-invalid', 'true');
     },
 
@@ -190,11 +191,11 @@
             display: ['words'],
             template: function (query, item) {
               return [
-                '<div class="list-inner">',
-                '<span class="twa-flag w3w-flags-{{country}}">',
+                '<div class="typeahead__list-inner">',
+                '<span class="typeahead__twa-flag w3w-flags-{{country}}">',
                 '</span>',
-                '<span class="twa">{{words}}</span>', '<br>',
-                '<span class="info">', '{{place}}', '</span>',
+                '<span class="typeahead__twa">{{words}}</span>', '<br>',
+                '<span class="typeahead__info">', '{{place}}', '</span>',
                 '</div>'
               ].join('\n');
             },
@@ -280,9 +281,10 @@
               // validate field when result being clicked
               var form = $(_self.element).closest('form');
               if (form.length && form.length > 0) {
-                form.validate().element('.w3w_valid');
+                // fire form.validate()
+                form.validate().element('.typeahead__w3w_valid');
 
-                $(_self.element).closest('.typeahead__container').nextAll('.w3w__validation').empty();
+                $(_self.element).closest('.typeahead__container').nextAll('.typeahead__w3w_validation').empty();
                 if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
                   $(_self.element).closest('.typeahead__query').addClass('valid');
                 }
@@ -303,7 +305,7 @@
           },
           onCancel: function (node, event) {
             if (_self.options.validation) {
-              $(_self.element).closest('.typeahead__container').nextAll('.w3w__validation').empty();
+              $(_self.element).closest('.typeahead__container').nextAll('.typeahead__w3w_validation').empty();
             }
             $(_self.element).attr('aria-invalid', true);
           }
@@ -339,7 +341,7 @@
           var m = twaRegex.exec(value);
           if (m !== null) {
             // check from result list first
-            var suggestions = $(element).closest('.typeahead__container').find('span.twa');
+            var suggestions = $(element).closest('.typeahead__container').find('span.typeahead__twa');
             if (typeof suggestions !== 'undefined' && suggestions.length > 0) {
               for (var i = 0; i < suggestions.length && !isSuccess; i++) {
                 if (suggestions[i].innerText === value) {
@@ -416,7 +418,7 @@
           },
           errorPlacement: function (error, element) {
             var valid_container = element.closest('.typeahead__container');
-            error.appendTo(valid_container.siblings('.typeahead__w3w__validation'));
+            error.appendTo(valid_container.siblings('.typeahead__w3w_validation'));
           }
         });
       }
