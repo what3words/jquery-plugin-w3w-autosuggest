@@ -280,9 +280,9 @@
               $(_self.element).attr('aria-invalid', true);
             } else {
               $(_self.element).attr('aria-invalid', false);
-              if (typeof item !== 'undefined') {
-                $(_self.element).trigger('selection', [item]);
-              }
+              // if (typeof item !== 'undefined') {
+              //   $(_self.element).trigger('selection', [item]);
+              // }
             }
           },
           onClickAfter: function (node, a, item, event) {
