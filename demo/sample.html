@@ -64,6 +64,7 @@ body {
       <li role="presentation"><a href="#countryfilter" aria-controls="noform" role="tab" data-toggle="tab">country filter</a></li>
       <li role="presentation"><a href="#noform" aria-controls="noform" role="tab" data-toggle="tab">without form</a></li>
       <li role="presentation"><a href="#tabrtl" aria-controls="tabrtl" role="tab" data-toggle="tab">rtl</a></li>
+      <li role="presentation"><a href="#tabclip" aria-controls="tabclip" role="tab" data-toggle="tab">clipping</a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -236,6 +237,17 @@ body {
         </div>
       </div>
       <!-- /.tabrtl -->
+      <div role="tabpanel" class="tab-pane" id="tabclip">
+        <div class="panel demo">
+          <div class="panel-body">
+            <h2>Focus Clipped</h2>
+            <div class="form-row">
+              <input type="text" class="w3w-address-field" id="focus-clipped">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.tabclip -->
     </div>
     <div style="margin: 150px;">&nbsp;</div>
   </div>
@@ -317,13 +329,21 @@ body {
 
     $('#rtl-fixed').w3wAddress({
       key: key,
-      logo: false,
+      logo: true,
       results: 5,
       lang: 'en',
       direction: 'rtl'
     });
 
-
+    $('#focus-clipped').w3wAddress({
+      key: key,
+      logo: true,
+      results: 5,
+      multilingual: false,
+      focus: '51.521251,-0.203586',
+      clip: 'bbox(52,0.3,50,-0.3)',
+      lang: 'en'
+    });
 
     var eeCountries = [{
         code: "at",
@@ -463,6 +483,16 @@ body {
     });
   });
 
+  $('#focus-clipped').on('cancel', function() {
+    console.log('#focus-clipped cancel');
+  });
+  $('#focus-clipped').on('selection', function(e, words) {
+    // e.preventDefault();
+    console.log('#focus-clipped selection', words);
+    if( words === undefined ) {
+      console.log(e);
+    }
+  });
   </script>
 </body>
 

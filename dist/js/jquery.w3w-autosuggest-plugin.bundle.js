@@ -4,7 +4,7 @@
  * Licensed under the MIT license
  *
  * @author what3words
- * @version 1.3.0
+ * @version 1.3.0-0
  * @link https://github.com/what3words/jquery-plugin-w3w-autosuggest
  */
 
@@ -213,6 +213,12 @@
                 if (typeof _self.options.lang !== 'undefined' && _self.options.lang) {
                   data.lang = _self.options.lang;
                 }
+                if (typeof _self.options.focus !== 'undefined' && _self.options.focus) {
+                  data.focus = _self.options.focus;
+                }
+                if (typeof _self.options.clip !== 'undefined' && _self.options.clip) {
+                  data.clip = _self.options.clip;
+                }
                 // if method is autosuggest, lang is mandatory and set default to 'en'
                 if (!_self.options.multilingual && typeof data.lang === 'undefined') {
                   data.lang = 'en';
@@ -274,6 +280,9 @@
               $(_self.element).attr('aria-invalid', true);
             } else {
               $(_self.element).attr('aria-invalid', false);
+              if (typeof item !== 'undefined') {
+                $(_self.element).trigger('selection', [item]);
+              }
             }
           },
           onClickAfter: function (node, a, item, event) {
@@ -301,6 +310,9 @@
               $(_self.element).attr('aria-invalid', true);
             } else {
               $(_self.element).attr('aria-invalid', false);
+              if (typeof item !== 'undefined') {
+                $(_self.element).trigger('selection', [item]);
+              }
             }
           },
           onCancel: function (node, event) {
@@ -308,6 +320,7 @@
               $(_self.element).closest('.typeahead__container').nextAll('.typeahead__w3w_validation').empty();
             }
             $(_self.element).attr('aria-invalid', true);
+            $(_self.element).trigger('cancel');
           }
         } // callback
       });
@@ -452,6 +465,8 @@
     results: 3,
     logo: true,
     lang: 'en',
+    focus: null,
+    clip: null,
     multilingual: true,
     direction: 'ltr',
     placeholder: 'e.g. lock.spout.radar',
