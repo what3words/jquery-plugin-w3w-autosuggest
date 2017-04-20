@@ -136,7 +136,7 @@
         hint: true,
         emptyTemplate: false,
         dynamic: true,
-        delay: 700,
+        delay: 200,
         maxItem: 20,
         source: {
           autosuggest: {
