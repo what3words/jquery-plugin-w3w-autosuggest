@@ -243,6 +243,7 @@ body {
             <h2>Focus Clipped</h2>
             <div class="form-row">
               <input type="text" class="w3w-address-field" id="focus-clipped">
+              <h3><small><code>focus: '51.521251,-0.203586',</code> and <code>clip: 'bbox(52,0.3,50,-0.3)'</code></small></h3>
             </div>
           </div>
         </div>
@@ -487,8 +488,13 @@ body {
     console.log('#focus-clipped cancel');
   });
   $('#focus-clipped').on('selection', function(e, words) {
-    // e.preventDefault();
     console.log('#focus-clipped selection', words);
+    if( words === undefined ) {
+      console.log(e);
+    }
+  });
+  $('#focus-clipped').on('searched', function(e, words) {
+    console.log('#focus-clipped search', words);
     if( words === undefined ) {
       console.log(e);
     }

@@ -122,6 +122,7 @@
       // SET Arabic input direction
       if (this.options.lang === 'ar') {
         $(this.element).css('direction', 'rtl');
+        this.options.hint = false;
       }
 
       var _self = this;
@@ -129,14 +130,14 @@
       var validationTypingTimer; // timer identifier
 
       $.typeahead({
-        debug: true,
+        debug: this.options.debug,
         input: $(this.element),
         minLength: 5, // x.x.x
         compression: true,
-        hint: true,
+        hint: this.options.hint,
         emptyTemplate: false,
         dynamic: true,
-        delay: 100,
+        delay: this.options.typeaheadDelay,
         maxItem: 20,
         source: {
           autosuggest: {
@@ -200,10 +201,17 @@
               ].join('\n');
             },
             ajax: function (query) {
-              var m = twaPartialRegex.exec(query);
+              var addr = query;
+              if (addr.indexOf('///') === 0) {
+                addr = addr.replace(/\/\/\//, '');
+              }
+              var m = twaPartialRegex.exec(addr);
               if (m !== null) {
+                // trigger searched event
+                $(_self.element).trigger('searched', [query]);
+                // build query data
                 var data = {
-                  addr: '{{query}}',
+                  addr: addr,
                   format: 'json',
                   key: _self.options.key,
                   count: _self.options.count,
@@ -461,6 +469,7 @@
     country_filter: null,
     key: '',
     debug: false,
+    hint: false,
     count: 50,
     results: 3,
     logo: true,
@@ -472,6 +481,6 @@
     placeholder: 'e.g. lock.spout.radar',
     validation: true,
     valid_error: 'Please enter a valid 3 word address.',
-    typeaheadDelay: 300
+    typeaheadDelay: 100
   };
 }));
