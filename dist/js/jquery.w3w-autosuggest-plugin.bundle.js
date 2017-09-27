@@ -4,7 +4,7 @@
  * Licensed under the MIT license
  *
  * @author what3words
- * @version 1.3.0-0
+ * @version 1.3.1
  * @link https://github.com/what3words/jquery-plugin-w3w-autosuggest
  */
 
@@ -76,7 +76,7 @@
       if (this.options.logo) {
         $(this.element).addClass('typeahead__padlogo');
         $(this.element).closest('.typeahead__container').prepend(
-          '<img class="typeahead__w3w-logo" src="https://assets.prod.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">'
+          '<img class="typeahead__w3w-logo" src="https://assets.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">'
         );
       }
       if (this.options.validation) {

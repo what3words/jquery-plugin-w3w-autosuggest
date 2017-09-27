@@ -2105,7 +2105,6 @@ Responsive CSS Sprite created using: http://responsive-css.us/
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 2px 0 0 2px;
-  -webkit-transition: all ease-in-out .15s;
   transition: all ease-in-out .15s;
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -2352,7 +2351,6 @@ Responsive CSS Sprite created using: http://responsive-css.us/
 }
 
 .typeahead__container.loading .typeahead__query:before, .typeahead__container.loading .typeahead__query:after {
-  -webkit-transition: all 0s linear, opacity 0.2s ease;
   transition: all 0s linear, opacity 0.2s ease;
   position: absolute;
   z-index: 3;

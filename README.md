@@ -170,6 +170,7 @@ What was done:
 
 # Revision History
 
+* `v1.3.1` 27/09/17 - change w3w svg logo url
 * `v1.3.0` 24/04/17 - fixes conflict with standard jquery-typeahead css, adds searched, selection and cancel events
 * `v1.2.1` 29/03/17 - prevent warning message on ajax request and test closest form for validation
 * `v1.2.0` 10/03/17 - refactoring plugin : tidying up dependencies, building single and bundle distribution files. Parameters : `multilingual` replace `auto_detect_lang`, `country_filter` replaces `country_selector` using only an ISO_3166-1_alpha-2 code
