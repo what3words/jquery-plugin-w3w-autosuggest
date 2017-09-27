@@ -1,4 +1,7 @@
 # <img src="https://what3words.com/assets/images/w3w_square_red.png" width="32" height="32" alt="what3words">&nbsp;what3words autosuggest jQuery plugin
+
+[![Build Status](https://travis-ci.org/what3words/jquery-plugin-w3w-autosuggest.svg?branch=master)](https://travis-ci.org/what3words/jquery-plugin-w3w-autosuggest)
+
 Easily capture 3 word addresses on your website with the *3 word address validation* JQuery plugin by what3words.
 
 what3words is a global addressing system. It has divided the world into a grid of 3m x 3m squares and assigned each one a unique 3 word address. what3words is more accurate than traditional street addressing, and even allows location information to be captured for places without addresses, such as parks or beaches.
