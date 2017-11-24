@@ -122,7 +122,7 @@ Parameters to be passed to the AutoSuggest plugin.
 | `direction`      | `String`   |  optional | ltr | default is `ltr`, can be set to `rtl` e.g. for Arabic |
 | `placeholder`    | `String`   |  optional |  | Sets the placeholder text of the input field (default is `placeholder: 'e.g. lock.spout.radar'). |
 | `validation`       | `Boolean`  |  optional | true | Adds UI validation result using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
-| `typeaheadDelay`       | `Number`  |  optional | 500 | delay in ms before sending new API request  |
+| `typeaheadDelay`       | `Number`  |  optional | 100 | delay in ms before sending new API request  |
 
 ## NOTES
 the attribute `aria-invalid` is used even if validation is set to false. Without `validation`, selecting a 3 word address from the result list ensure the address is valid.
