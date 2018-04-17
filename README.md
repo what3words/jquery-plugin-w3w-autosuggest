@@ -173,14 +173,9 @@ What was done:
 
 #### Use sample
 
-Create a `key.js` file in [demo](./demo/) folder as
+The sample page uses the browser localStorage to store your API key. You can find it [here](./demo/sample.html) where multiple configurations can be found.
 
-```Javascript
-var key = 'YOUR-API-KEY';
-```
-
-Then open [sample.html](./demo/sample.html) file with your browser
-
+Try it live : [sample.html](https://what3words.github.io/demo/sample.html)
 
 # Revision History
 
@@ -194,4 +189,4 @@ Then open [sample.html](./demo/sample.html) file with your browser
 | `v1.1.0` | 13/02/17 | uses API method `autosuggest-ml` with number of background results increased to 50 |
 | `v1.0.0` | 07/02/17 | Initial release |
 
-**Nb** Using European Date Format :smile: Sorry :us-flag:
+**Nb** Using European Date Format :smile: sorry :us:
