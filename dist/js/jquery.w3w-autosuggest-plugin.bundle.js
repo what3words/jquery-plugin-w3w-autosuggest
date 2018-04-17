@@ -4,7 +4,7 @@
  * Licensed under the MIT license
  *
  * @author what3words
- * @version 1.3.1
+ * @version 1.4.0
  * @link https://github.com/what3words/jquery-plugin-w3w-autosuggest
  */
 
