@@ -11,12 +11,10 @@
   <!-- include plugin's CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.selectric/1.11.1/selectric.css">
   <link rel="stylesheet" href="../dist/css/jquery.w3w-autosuggest-plugin.bundle.css">
-  <!-- <link rel="stylesheet" href="./jquery.typeahead.min.css"> -->
 </head>
 <style>
-html {
+html {}
 
-}
 body {
   padding-top: 50px;
 }
@@ -39,19 +37,9 @@ body {
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button> -->
         <a class="navbar-brand" href="#">what3words autosuggest jQuery plugin</a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
-        <!-- <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#about">About</a></li>
-        </ul> -->
       </div>
       <!--/.nav-collapse -->
     </div>
@@ -258,16 +246,24 @@ body {
   <script src="https://cdn.jsdelivr.net/jquery.selectric/1.11.1/jquery.selectric.min.js"></script>
   <!-- include plugin's javascript -->
   <script src="../dist/js/jquery.w3w-autosuggest-plugin.bundle.js"></script>
-  <!-- file defining YOUR API KEY -->
-  <!-- var key = 'YOUR-API-KEY'; -->
-  <script src="key.js"></script>
   <script>
+  if (!localStorage.getItem('w3wkey')) {
+    localStorage.setItem(
+      'w3wkey',
+      prompt('What is your w3w API key?')
+    );
+  }
+  var key = localStorage.getItem('w3wkey');
+
   $(function() {
     $('#selectCountry').selectric();
 
+    $('form').submit(function(e){
+      e.preventDefault();
+    });
+
     $('#ml-one').w3wAddress({
       key: key,
-      // logo: false,
       results: 5,
       lang: 'en'
     });
@@ -489,16 +485,17 @@ body {
   });
   $('#focus-clipped').on('selection', function(e, words) {
     console.log('#focus-clipped selection', words);
-    if( words === undefined ) {
+    if (words === undefined) {
       console.log(e);
     }
   });
   $('#focus-clipped').on('searched', function(e, words) {
     console.log('#focus-clipped search', words);
-    if( words === undefined ) {
+    if (words === undefined) {
       console.log(e);
     }
   });
+
   </script>
 </body>
 

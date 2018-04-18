@@ -110,7 +110,7 @@ Parameters to be passed to the AutoSuggest plugin.
 
 | Option         | Type       | Optional? | Default | Description |
 | ---------------|------------|-----------|---------|----------------------|
-| `key`          | `String`   | mandatory | | Your API key |
+| `key`          | `String`   | mandatory | | Your API key, mandatory unless you bring your proxy page as `api_end_point` to hide your key |
 | `debug`        | `Boolean`  |  optional | false | Enables debug info in console |
 | `hint`         | `Boolean`  |  optional | true | Displays hint result (default is `false` for Arabic) |
 | `logo`         | `Boolean`  |  optional | true | displays what3words logo on the input as a svg image |
@@ -123,6 +123,7 @@ Parameters to be passed to the AutoSuggest plugin.
 | `placeholder`    | `String`   |  optional |  | Sets the placeholder text of the input field (default is `placeholder: 'e.g. lock.spout.radar'). |
 | `validation`       | `Boolean`  |  optional | true | Adds UI validation result using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
 | `typeaheadDelay`       | `Number`  |  optional | 100 | delay in ms before sending new API request  |
+| `api_end_point`       | `String`  |  optional |  | for advanced integration, allow you to proxy request to our API and then hide your key  |
 
 ## NOTES
 the attribute `aria-invalid` is used even if validation is set to false. Without `validation`, selecting a 3 word address from the result list ensure the address is valid.
@@ -173,19 +174,15 @@ What was done:
 
 #### Use sample
 
-Create a `key.js` file in [demo](./demo/) folder as
+The sample page uses the browser localStorage to store your API key. You can find it [here](./demo/sample.html) where multiple configurations can be found.
 
-```Javascript
-var key = 'YOUR-API-KEY';
-```
-
-Then open [sample.html](./demo/sample.html) file with your browser
-
+Try it live : [sample.html](https://what3words.github.io/demo/sample.html)
 
 # Revision History
 
 | Version  | Date     | Description |
 | -------- | -------- | ----------- |
+| `v1.5.0` | 19/04/18 | update 3 word address validation for Japanese with interpunct |
 | `v1.4.0` | 06/02/18 | bump jquery version to prevent security issues |
 | `v1.3.1` | 27/09/17 | change w3w svg logo url |
 | `v1.3.0` | 24/04/17 | fixes conflict with standard jquery-typeahead css, adds searched, selection and cancel events |
@@ -194,4 +191,4 @@ Then open [sample.html](./demo/sample.html) file with your browser
 | `v1.1.0` | 13/02/17 | uses API method `autosuggest-ml` with number of background results increased to 50 |
 | `v1.0.0` | 07/02/17 | Initial release |
 
-**Nb** Using European Date Format :smile: Sorry :us-flag:
+**Nb** Using European Date Format :smile: sorry :us:

@@ -4,7 +4,7 @@
  * Licensed under the MIT license
  *
  * @author what3words
- * @version 1.3.1
+ * @version 1.5.0
  * @link https://github.com/what3words/jquery-plugin-w3w-autosuggest
  */
 
@@ -35,6 +35,9 @@
 
   var pluginName = 'w3wAddress';
 
+  var twaPartialRegex = (/^(\D{1,})[.・](\D{1,})[.・](\D{1,})$/i);
+  var twaRegex = (/^(\D{2,})[.・](\D{2,})[.・](\D{2,})$/i);
+
   /**
    * Create an instance of AutoSuggest
    *
@@ -48,6 +51,10 @@
     this._name = pluginName;
     this._defaults = $.fn.w3wAddress.defaults;
     this.options = $.extend({}, this._defaults, options);
+    // override API endpoint to proxy the request and for instance hide API key
+    if (typeof this.options.api_end_point !== 'undefined') {
+      this._api_end_point = this.options.api_end_point;
+    }
     this.init();
   };
 
@@ -70,20 +77,18 @@
     buildWrappers: function () {
       var direction = this.options.direction;
 
-      $(this.element).wrapAll('<div class="typeahead__container ' + direction +
-        '"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>');
+      $(this.element).wrapAll(
+        '<div class="typeahead__container ' + direction + '"><div class="typeahead__field"><span class="typeahead__query"></span></div></div>'
+      );
 
       if (this.options.logo) {
         $(this.element).addClass('typeahead__padlogo');
-        $(this.element).closest('.typeahead__container').prepend(
-          '<img class="typeahead__w3w-logo" src="https://assets.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">'
-        );
+        $(this.element).closest('.typeahead__container').prepend('<img class="typeahead__w3w-logo" src="https://assets.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">');
       }
       if (this.options.validation) {
         $(this.element).closest('.typeahead__container').after('<div class="typeahead__w3w_validation"></div>');
       }
-      $(this.element).addClass('typeahead__w3w_valid').attr('placeholder', this.options.placeholder + ' ').attr(
-        'autocomplete', 'off').attr('dir', 'auto').attr('aria-invalid', 'true');
+      $(this.element).addClass('typeahead__w3w_valid').attr('placeholder', this.options.placeholder + ' ').attr('autocomplete', 'off').attr('dir', 'auto').attr('aria-invalid', 'true');
     },
 
     bindEvents: function () {
@@ -105,14 +110,11 @@
     },
 
     autoSuggest: function () {
-      var twaPartialRegex = (/^(\D{1,})\.(\D{1,})\.(\D{1,})$/i);
-
-      // DEBUG IF has key
-      if (this.options.key === '' && this.options.debug) {
+      if (this.options.key === '' || this.options.key === null) {
         console.log('No what3words API key found!');
-        alert(
-          'A what3words API key is required to use the AutoSuggest plugin. Information on how to register for a key can be found in the README'
-        );
+        if (this.options.debug) {
+          console.log('A what3words API key is required to use the AutoSuggest plugin. Information on how to register for a key can be found in the README');
+        }
       } else {
         if (this.options.debug) {
           console.log('what3words API key: ' + this.options.key);
@@ -128,6 +130,35 @@
       var _self = this;
       var counter = 0;
       var validationTypingTimer; // timer identifier
+
+      $(this.element).focusout(function () {
+        console.log('trim?', this.value);
+        if (/ /.test(this.value)) {
+          console.log('trim needed');
+          this.value = this.value.replace(/ /g, '');
+          if (_self.options.validation) {
+            // validate field when result being clicked
+            var form = $(_self.element).closest('form');
+            if (form.length && form.length > 0) {
+              // fire form.validate()
+              form.validate().element('.typeahead__w3w_valid');
+            }
+          } else {
+            var isSuccess = false;
+
+            var suggestions = $(_self.element).closest('.typeahead__container').find('span.typeahead__twa');
+            if (typeof suggestions !== 'undefined' && suggestions.length > 0) {
+              for (var i = 0; i < suggestions.length && !isSuccess; i++) {
+                if (suggestions[i].innerText === this.value) {
+                  isSuccess = true;
+                  // marks input as a valid 3wa
+                  $(_self.element).attr('aria-invalid', false);
+                }
+              }
+            }
+          }
+        }
+      });
 
       $.typeahead({
         debug: this.options.debug,
@@ -195,8 +226,11 @@
                 '<div class="typeahead__list-inner">',
                 '<span class="typeahead__twa-flag w3w-flags-{{country}}">',
                 '</span>',
-                '<span class="typeahead__twa">{{words}}</span>', '<br>',
-                '<span class="typeahead__info">', '{{place}}', '</span>',
+                '<span class="typeahead__twa">{{words}}</span>',
+                '<br>',
+                '<span class="typeahead__info">',
+                '{{place}}',
+                '</span>',
                 '</div>'
               ].join('\n');
             },
@@ -231,7 +265,9 @@
                 if (!_self.options.multilingual && typeof data.lang === 'undefined') {
                   data.lang = 'en';
                 }
-                var autosuggest = _self.options.multilingual ? 'autosuggest-ml' : 'autosuggest';
+                var autosuggest = _self.options.multilingual
+                  ? 'autosuggest-ml'
+                  : 'autosuggest';
                 return {
                   type: 'GET',
                   url: _self._api_end_point + autosuggest,
@@ -265,11 +301,9 @@
             if (result.length === 0) {
               text = 'No results matching "' + query + '"';
             } else if (result.length > 0 && result.length < resultCount) {
-              text = 'Showing ' + result.length + ' of ' + resultCount +
-                ' elements matching "' + query + '"';
+              text = 'Showing ' + result.length + ' of ' + resultCount + ' elements matching "' + query + '"';
             } else if (result.length > 0) {
-              text = 'Showing ' + result.length + ' elements matching addr= ' + query +
-                '"';
+              text = 'Showing ' + result.length + ' elements matching addr= ' + query + '"';
             }
             text += ', with lang=' + _self.options.lang;
             if (typeof _self.options.focus !== 'undefined') {
@@ -284,13 +318,10 @@
           },
           onNavigateAfter: function (node, lis, a, item, query, event) {
             if (typeof item === 'undefined' || typeof item.words === 'undefined') {
-              // marks input as a valid 3wa
               $(_self.element).attr('aria-invalid', true);
             } else {
+              // marks input as a valid 3wa
               $(_self.element).attr('aria-invalid', false);
-              // if (typeof item !== 'undefined') {
-              //   $(_self.element).trigger('selection', [item]);
-              // }
             }
           },
           onClickAfter: function (node, a, item, event) {
@@ -358,8 +389,9 @@
         } else {
           // IF has content
           var isSuccess = false;
-          var twaRegex = (/^(\D{3,})\.(\D{3,})\.(\D{3,})$/i);
-          var m = twaRegex.exec(value);
+          var addr = value;
+          // var addr = value;
+          var m = twaRegex.exec(addr);
           if (m !== null) {
             // check from result list first
             var suggestions = $(element).closest('.typeahead__container').find('span.typeahead__twa');
@@ -378,7 +410,7 @@
                 type: 'GET',
                 // async: false,
                 data: {
-                  addr: value,
+                  addr: addr,
                   key: _self.options.key,
                   format: 'json'
                 },
@@ -405,19 +437,15 @@
       });
 
       // Add Custom W3W validation to $validator
-      $.validator.addClassRules('typeahead__w3w_valid', {
-        w3w_valid: true
-      });
+      $.validator.addClassRules('typeahead__w3w_valid', {w3w_valid: true});
 
       var typingTimer; // timer identifier
       var doneTypingInterval = 500;
-      var regex = /^(\D{1,})\.(\D{1,})\.(\D{1,})$/i;
 
       var form = $(this.element).closest('form');
       if (form.length && form.length > 0) {
         // Init validation
         form.validate({
-          // $(this.element).validate({
           onfocusout: false,
           onkeyup: function (element) {
             if ($(element).hasClass('typeahead__w3w_valid')) {
@@ -429,7 +457,7 @@
                 $(element).closest('.typeahead__query').removeClass('valid');
 
                 // Only check for validation when regex match
-                if (regex.test($(element).val())) {
+                if (twaPartialRegex.test($(element).val())) {
                   $(element).valid();
                 }
               };
