@@ -258,9 +258,12 @@ body {
   $(function() {
     $('#selectCountry').selectric();
 
+    $('form').submit(function(e){
+      e.preventDefault();
+    });
+
     $('#ml-one').w3wAddress({
       key: key,
-      // logo: false,
       results: 5,
       lang: 'en'
     });
