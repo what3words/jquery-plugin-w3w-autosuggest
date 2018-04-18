@@ -110,7 +110,7 @@ Parameters to be passed to the AutoSuggest plugin.
 
 | Option         | Type       | Optional? | Default | Description |
 | ---------------|------------|-----------|---------|----------------------|
-| `key`          | `String`   | mandatory | | Your API key |
+| `key`          | `String`   | mandatory | | Your API key, mandatory unless you bring your proxy page as `api_end_point` to hide your key |
 | `debug`        | `Boolean`  |  optional | false | Enables debug info in console |
 | `hint`         | `Boolean`  |  optional | true | Displays hint result (default is `false` for Arabic) |
 | `logo`         | `Boolean`  |  optional | true | displays what3words logo on the input as a svg image |
@@ -122,7 +122,8 @@ Parameters to be passed to the AutoSuggest plugin.
 | `direction`      | `String`   |  optional | ltr | default is `ltr`, can be set to `rtl` e.g. for Arabic |
 | `placeholder`    | `String`   |  optional |  | Sets the placeholder text of the input field (default is `placeholder: 'e.g. lock.spout.radar'). |
 | `validation`       | `Boolean`  |  optional | true | Adds UI validation result using [jquery-validation](https://www.npmjs.com/package/jquery-validation) |
-| `typeaheadDelay`       | `Number`  |  optional | 500 | delay in ms before sending new API request  |
+| `typeaheadDelay`       | `Number`  |  optional | 100 | delay in ms before sending new API request  |
+| `api_end_point`       | `String`  |  optional |  | for advanced integration, allow you to proxy request to our API and then hide your key  |
 
 ## NOTES
 the attribute `aria-invalid` is used even if validation is set to false. Without `validation`, selecting a 3 word address from the result list ensure the address is valid.
@@ -181,6 +182,7 @@ Try it live : [sample.html](https://what3words.github.io/demo/sample.html)
 
 | Version  | Date     | Description |
 | -------- | -------- | ----------- |
+| `v1.5.0` | 19/04/18 | update 3 word address validation for Japanese with interpunct |
 | `v1.4.0` | 06/02/18 | bump jquery version to prevent security issues |
 | `v1.3.1` | 27/09/17 | change w3w svg logo url |
 | `v1.3.0` | 24/04/17 | fixes conflict with standard jquery-typeahead css, adds searched, selection and cancel events |
