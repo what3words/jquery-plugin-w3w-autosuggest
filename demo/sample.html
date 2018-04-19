@@ -44,10 +44,9 @@ body {
       <!--/.nav-collapse -->
     </div>
   </nav>
-  <div class="container">
-    <div class="alert alert-danger hide" role="alert">Please set your API key at Prompt when the page loads.
-      To proceed clean your cache or update your localStorage</div>
-
+  <div class="alert alert-danger hide" role="alert">Please set your API key at Prompt when the page loads.
+    To proceed clean your cache or update your localStorage</div>
+  <div class="container contentpage">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#multilingual" aria-controls="multilingual" role="tab" data-toggle="tab">multilingual</a></li>
@@ -261,6 +260,7 @@ body {
   $(function() {
     if( key === 'null') {
       $('.alert').removeClass('hide');
+      $('.contentpage').addClass('hide');
     }
 
     $('#selectCountry').selectric();
