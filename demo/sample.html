@@ -44,9 +44,18 @@ body {
       <!--/.nav-collapse -->
     </div>
   </nav>
-  <div class="alert alert-danger hide" role="alert">Please set your API key at Prompt when the page loads.
-    To proceed clean your cache or update your localStorage</div>
-  <div class="container contentpage">
+  <div class="container">
+    <div class="alert alert-danger" role="alert">Please set your API key</div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-input" ><span class="glyphicon glyphicon-cog"></span></span>
+          <input id="apikey" type="text" class="form-control" placeholder="what3words API KEY" aria-describedby="basic-input">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container contentpage hide">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#multilingual" aria-controls="multilingual" role="tab" data-toggle="tab">multilingual</a></li>
@@ -249,25 +258,9 @@ body {
   <!-- include plugin's javascript -->
   <script src="../dist/js/jquery.w3w-autosuggest-plugin.bundle.js"></script>
   <script>
-  var key = localStorage.getItem('w3wkey');
-  if (!key || key === 'null') {
-    localStorage.setItem(
-      'w3wkey',
-      prompt('What is your w3w API key?')
-    );
-  }
-
-  $(function() {
-    if( key === 'null') {
-      $('.alert').removeClass('hide');
-      $('.contentpage').addClass('hide');
-    }
-
+  var key = '';
+  function activate() {
     $('#selectCountry').selectric();
-
-    $('form').submit(function(e){
-      e.preventDefault();
-    });
 
     $('#ml-one').w3wAddress({
       key: key,
@@ -485,22 +478,42 @@ body {
         }
       }
     });
-  });
 
-  $('#focus-clipped').on('cancel', function() {
-    console.log('#focus-clipped cancel');
-  });
-  $('#focus-clipped').on('selection', function(e, words) {
-    console.log('#focus-clipped selection', words);
-    if (words === undefined) {
-      console.log(e);
-    }
-  });
-  $('#focus-clipped').on('searched', function(e, words) {
-    console.log('#focus-clipped search', words);
-    if (words === undefined) {
-      console.log(e);
-    }
+    $('#focus-clipped').on('cancel', function() {
+      console.log('#focus-clipped cancel');
+    });
+    $('#focus-clipped').on('selection', function(e, words) {
+      console.log('#focus-clipped selection', words);
+      if (words === undefined) {
+        console.log(e);
+      }
+    });
+    $('#focus-clipped').on('searched', function(e, words) {
+      console.log('#focus-clipped search', words);
+      if (words === undefined) {
+        console.log(e);
+      }
+    });
+  }
+
+  $(function() {
+
+    $('form').submit(function(e){
+      e.preventDefault();
+    });
+
+    $('#apikey').change(function() {
+      key = $('#apikey').val();
+      if( typeof key === 'undefined' || key === '') {
+        $('.alert').removeClass('hide');
+        return;
+      }
+      $('.alert').addClass('hide');
+      $('.contentpage').removeClass('hide');
+      activate();
+    });
+
+
   });
 
   </script>
