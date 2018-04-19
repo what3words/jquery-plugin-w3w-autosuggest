@@ -45,6 +45,9 @@ body {
     </div>
   </nav>
   <div class="container">
+    <div class="alert alert-danger hide" role="alert">Please set your API key at Prompt when the page loads.
+      To proceed clean your cache or update your localStorage</div>
+
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#multilingual" aria-controls="multilingual" role="tab" data-toggle="tab">multilingual</a></li>
@@ -247,15 +250,19 @@ body {
   <!-- include plugin's javascript -->
   <script src="../dist/js/jquery.w3w-autosuggest-plugin.bundle.js"></script>
   <script>
-  if (!localStorage.getItem('w3wkey')) {
+  var key = localStorage.getItem('w3wkey');
+  if (!key || key === 'null') {
     localStorage.setItem(
       'w3wkey',
       prompt('What is your w3w API key?')
     );
   }
-  var key = localStorage.getItem('w3wkey');
 
   $(function() {
+    if( key === 'null') {
+      $('.alert').removeClass('hide');
+    }
+
     $('#selectCountry').selectric();
 
     $('form').submit(function(e){
