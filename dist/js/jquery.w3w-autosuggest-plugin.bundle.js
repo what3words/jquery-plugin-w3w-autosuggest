@@ -112,7 +112,7 @@
     autoSuggest: function () {
       if (this.options.key === '' || this.options.key === null) {
         console.log('No what3words API key found!');
-        if (this.options.debug) {
+        if (this.options.debug && typeof this.options.api_end_point === 'undefined') {
           console.log('A what3words API key is required to use the AutoSuggest plugin. Information on how to register for a key can be found in the README');
         }
       } else {
@@ -132,9 +132,7 @@
       var validationTypingTimer; // timer identifier
 
       $(this.element).focusout(function () {
-        console.log('trim?', this.value);
         if (/ /.test(this.value)) {
-          console.log('trim needed');
           this.value = this.value.replace(/ /g, '');
           if (_self.options.validation) {
             // validate field when result being clicked
@@ -145,7 +143,6 @@
             }
           } else {
             var isSuccess = false;
-
             var suggestions = $(_self.element).closest('.typeahead__container').find('span.typeahead__twa');
             if (typeof suggestions !== 'undefined' && suggestions.length > 0) {
               for (var i = 0; i < suggestions.length && !isSuccess; i++) {
@@ -390,40 +387,44 @@
           // IF has content
           var isSuccess = false;
           var addr = value;
-          // var addr = value;
+          if (/ /.test(addr)) {
+            addr = value.replace(/ /g, '');
+            $(element).val(addr);
+          }
           var m = twaRegex.exec(addr);
           if (m !== null) {
             // check from result list first
             var suggestions = $(element).closest('.typeahead__container').find('span.typeahead__twa');
             if (typeof suggestions !== 'undefined' && suggestions.length > 0) {
               for (var i = 0; i < suggestions.length && !isSuccess; i++) {
-                if (suggestions[i].innerText === value) {
+                if (suggestions[i].innerText === addr) {
                   isSuccess = true;
                 }
               }
             }
             // still not a sucess ?
-            if (!isSuccess) {
-              // check with a forward geocoding
-              $.ajax({
-                url: _self._api_end_point + 'forward',
-                type: 'GET',
-                // async: false,
-                data: {
-                  addr: addr,
-                  key: _self.options.key,
-                  format: 'json'
-                },
-                dataType: 'json',
-                success: function (result) {
-                  var response = result;
-                  // If W3A is VALID
-                  if (response.hasOwnProperty('geometry')) {
-                    isSuccess = true;
-                  }
-                } // end success
-              });
-            }
+            // meant to be used when autosuggest was monlingual
+            // if (!isSuccess) {
+            //   // check with a forward geocoding
+            //   $.ajax({
+            //     url: _self._api_end_point + 'forward',
+            //     type: 'GET',
+            //     // async: false,
+            //     data: {
+            //       addr: addr,
+            //       key: _self.options.key,
+            //       format: 'json'
+            //     },
+            //     dataType: 'json',
+            //     success: function (result) {
+            //       var response = result;
+            //       // If W3A is VALID
+            //       if (response.hasOwnProperty('geometry')) {
+            //         isSuccess = true; // TODO fix it: already returned with false
+            //       }
+            //     } // end success
+            //   });
+            // }
           }
           return isSuccess;
         }
@@ -446,7 +447,7 @@
       if (form.length && form.length > 0) {
         // Init validation
         form.validate({
-          onfocusout: false,
+          onfocusout: false, // custom made
           onkeyup: function (element) {
             if ($(element).hasClass('typeahead__w3w_valid')) {
               clearTimeout(typingTimer);
