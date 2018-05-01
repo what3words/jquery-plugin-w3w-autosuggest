@@ -111,8 +111,9 @@
 
     autoSuggest: function () {
       if (this.options.key === '' || this.options.key === null) {
-        console.log('No what3words API key found!');
-        if (this.options.debug && typeof this.options.api_end_point === 'undefined') {
+        console.log('No what3words API key found in constructor!');
+        // check if user provide a proxy endpoint
+        if (typeof this.options.api_end_point === 'undefined') {
           console.log('A what3words API key is required to use the AutoSuggest plugin. Information on how to register for a key can be found in the README');
         }
       } else {
@@ -120,7 +121,6 @@
           console.log('what3words API key: ' + this.options.key);
         }
       }
-
       // SET Arabic input direction
       if (this.options.lang === 'ar') {
         $(this.element).css('direction', 'rtl');

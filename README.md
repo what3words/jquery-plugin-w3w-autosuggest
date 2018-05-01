@@ -126,10 +126,18 @@ Parameters to be passed to the AutoSuggest plugin.
 | `api_end_point`       | `String`  |  optional |  | for advanced integration, allow you to proxy request to our API and then hide your key  |
 
 ## NOTES
-the attribute `aria-invalid` is used even if validation is set to false. Without `validation`, selecting a 3 word address from the result list ensure the address is valid.
+#### aria-invalid
+The attribute `aria-invalid` is used even if validation is set to false. Without `validation`, selecting a 3 word address from the result list ensure the address is valid.
 For references see:
 - 1 : https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-invalid_attribute
 - 2 : https://www.w3.org/TR/wai-aria/states_and_properties#aria-invalid
+
+#### api_end_point
+this new feature (since version 1.5) allow you to proxy requests to your own server and then hide your what3words API key from your endusers.
+
+The trailing `/` is needed as the plugin append `autosuggest-ml` or `autosuggest` regarding your constructor options.
+
+This API endpoint must then provide a rest endpoint with the desired operations `autosuggest-ml` and/or `autosuggest` according your needs.
 
 ## Building
 
