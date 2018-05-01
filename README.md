@@ -190,7 +190,7 @@ Try it live : [sample.html](https://what3words.github.io/demo/sample.html)
 
 | Version  | Date     | Description |
 | -------- | -------- | ----------- |
-| `v1.5.0` | xx/xx/18 | update 3 word address validation for Japanese with interpunct |
+| `v1.5.0` | 01/05/18 | update 3 word address validation for Japanese with interpunct |
 | `v1.4.0` | 06/02/18 | bump jquery version to prevent security issues |
 | `v1.3.1` | 27/09/17 | change w3w svg logo url |
 | `v1.3.0` | 24/04/17 | fixes conflict with standard jquery-typeahead css, adds searched, selection and cancel events |
