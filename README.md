@@ -63,7 +63,7 @@ or separately
 <link rel="stylesheet" href="[path-to-plugin]/css/jquery.w3w-autosuggest-plugin.min.css">
 ```
 
-*NB*: Do not forget to copy the flags.png file with the css files
+**NB**: Do not forget to copy the `flags.png` file with the css files
 
 You'll need to [register](https://what3words.com/register?dev=true) for a what3words API key to access AutoSuggest. The key should be passed to a new instance of the plugin which is initialised on an input field. Initialisation should preferably occur after jQuery and before the </body> tag.
 
