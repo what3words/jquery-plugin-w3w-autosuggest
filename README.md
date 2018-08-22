@@ -28,8 +28,8 @@ While `autosuggest` uses the `clipping` parameter to determine the geographical 
 
 ### Dependencies
 The plugin uses these dependencies.
-- jquery-Typeahead plugin 2.8.0 https://www.npmjs.com/package/jquery-typeahead
-- jquery-validation plugin  1.16.0 https://www.npmjs.com/package/jquery-validation
+- jquery-Typeahead plugin 2.10.4 https://www.npmjs.com/package/jquery-typeahead
+- jquery-validation plugin  1.17.0 https://www.npmjs.com/package/jquery-validation
 Distribution contains a bundle version including these libraries:
 
 ### Using the plugin
@@ -191,6 +191,7 @@ Try it live : [sample.html](https://what3words.github.io/jquery-plugin-w3w-autos
 
 | Version  | Date     | Description |
 | -------- | -------- | ----------- |
+| `v1.5.1` | 01/05/18 | clearing the field now removes the "valid" CSS class rather than leaving it |
 | `v1.5.0` | 01/05/18 | update 3 word address validation for Japanese with interpunct |
 | `v1.4.0` | 06/02/18 | bump jquery version to prevent security issues |
 | `v1.3.1` | 27/09/17 | change w3w svg logo url |
