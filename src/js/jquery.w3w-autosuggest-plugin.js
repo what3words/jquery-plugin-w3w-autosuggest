@@ -356,6 +356,7 @@
               $(_self.element).closest('.typeahead__container').nextAll('.typeahead__w3w_validation').empty();
             }
             $(_self.element).attr('aria-invalid', true);
+            $(_self.element).removeClass('valid');
             $(_self.element).trigger('cancel');
           }
         } // callback
