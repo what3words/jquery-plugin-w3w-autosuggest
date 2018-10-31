@@ -333,6 +333,19 @@
                 if (!$(_self.element).closest('.typeahead__query').hasClass('valid')) {
                   $(_self.element).closest('.typeahead__query').addClass('valid');
                 }
+
+                $.ajax({
+                  url: _self._api_end_point + 'forward',
+                  type: 'GET',
+                  async: false,
+                  data: {
+                    addr: item.words,
+                    key: _self.options.key,
+                    format: 'json'
+                  },
+                  dataType: 'json'
+                });
+
                 clearTimeout(validationTypingTimer);
                 // user is "finished typing," run regex and validate
                 var clearValidationMark = function () {
