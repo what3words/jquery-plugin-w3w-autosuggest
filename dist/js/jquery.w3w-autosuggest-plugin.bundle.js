@@ -471,6 +471,12 @@
                 // remove valid mark every time
                 $(element).closest('.typeahead__query').removeClass('valid');
 
+                const value = $(element).val();
+
+                if (value.substr(0, 3) === '///') {
+                  $(element).val(value.substring(3));
+                }
+
                 // Only check for validation when regex match
                 if (twaPartialRegex.test($(element).val())) {
                   $(element).valid();
