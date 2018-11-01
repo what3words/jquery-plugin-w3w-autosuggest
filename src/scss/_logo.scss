@@ -1,14 +1,15 @@
 .typeahead__container {
   .typeahead__padlogo {
-    padding-left: 50px;
+    padding-left: 24px;
   }
 
   .typeahead__w3w-logo {
-    max-width: 32px;
+    max-width: 18px;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 7px;
+    top: 6px;
     z-index: 3;
+    color: #e11f26;
   }
 
   &.rtl {
@@ -19,7 +20,13 @@
     }
 
     .typeahead__padlogo {
-      padding-right: 50px !important;
+      padding-right: 25px !important;
+    }
+
+    .typeahead__w3w-logo {
+      left: auto;
+      top: 6px;
+      right: 7px;
     }
   }
 }

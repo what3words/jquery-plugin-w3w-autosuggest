@@ -83,7 +83,9 @@
 
       if (this.options.logo) {
         $(this.element).addClass('typeahead__padlogo');
-        $(this.element).closest('.typeahead__container').prepend('<img class="typeahead__w3w-logo" src="https://assets.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">');
+        // $(this.element).closest('.typeahead__container').prepend('<img class="typeahead__w3w-logo" src="https://assets.what3words.com/images/w3w_grid-logo.svg" alt="w3w-logo">');
+        var logo = '<svg class="typeahead__w3w-logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve"><path fill="currentColor" d="M10.7,4h2L4,28H2L10.7,4z M19.7,4h2L13,28h-2L19.7,4z M28.7,4h2L22,28h-2L28.7,4z"></path></svg>';
+        $(this.element).closest('.typeahead__container').prepend(logo);
       }
       if (this.options.validation) {
         $(this.element).closest('.typeahead__container').after('<div class="typeahead__w3w_validation"></div>');
@@ -221,13 +223,11 @@
             template: function (query, item) {
               return [
                 '<div class="typeahead__list-inner">',
-                '<span class="typeahead__twa-flag w3w-flags-{{country}}">',
-                '</span>',
-                '<span class="typeahead__twa">{{words}}</span>',
-                '<br>',
-                '<span class="typeahead__info">',
-                '{{place}}',
-                '</span>',
+
+                '<svg class="typeahead__w3w-logo-inline" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve"><path fill="currentColor" d="M10.7,4h2L4,28H2L10.7,4z M19.7,4h2L13,28h-2L19.7,4z M28.7,4h2L22,28h-2L28.7,4z"></path></svg>',
+                '<div class="typeahead__twa-flag w3w-flags-{{country}}"></div>',
+                '<div class="typeahead__twa">{{words}}</div>',
+                '<div class="typeahead__info">{{place}}</div>',
                 '</div>'
               ].join('\n');
             },

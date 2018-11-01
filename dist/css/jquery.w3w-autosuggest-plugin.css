@@ -1,13 +1,14 @@
 .typeahead__container .typeahead__padlogo {
-  padding-left: 50px;
+  padding-left: 24px;
 }
 
 .typeahead__container .typeahead__w3w-logo {
-  max-width: 32px;
+  max-width: 18px;
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 7px;
+  top: 6px;
   z-index: 3;
+  color: #e11f26;
 }
 
 .typeahead__container.rtl .typeahead__w3w-logo {
@@ -17,12 +18,42 @@
 }
 
 .typeahead__container.rtl .typeahead__padlogo {
-  padding-right: 50px !important;
+  padding-right: 25px !important;
+}
+
+.typeahead__container.rtl .typeahead__w3w-logo {
+  left: auto;
+  top: 6px;
+  right: 7px;
+}
+
+.typeahead__w3w-logo-inline {
+  width: 18px;
+  color: #e11f26;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}
+
+.typeahead__twa {
+  padding: 0 0 2px 17px;
+}
+
+.typeahead__info {
+  padding: 6px 0 0 20px;
+}
+
+.typeahead__container .typeahead__twa-flag {
+  position: absolute;
+  height: 17px !important;
+  width: 17px !important;
+  top: 29px;
+  left: 7px;
+  margin: 0;
 }
 
 .typeahead__container.rtl .typeahead__field input {
   direction: rtl;
-  padding: 10px;
 }
 
 .typeahead__container.rtl .typeahead__list-inner {
@@ -40,6 +71,25 @@
 
 .typeahead__container.rtl .typeahead__query:after {
   left: 40px;
+}
+
+.typeahead__container.rtl .typeahead__w3w-logo-inline {
+  left: auto;
+  right: 6px;
+}
+
+.typeahead__container.rtl .typeahead__twa {
+  padding: 1px 17px 2px 0;
+}
+
+.typeahead__container.rtl .typeahead__info {
+  padding: 6px 23px 0 0;
+}
+
+.typeahead__container.rtl .typeahead__twa-flag {
+  top: 29px;
+  right: 0;
+  left: auto;
 }
 
 .typeahead__container .typeahead__query {

@@ -1,9 +1,36 @@
+.typeahead__w3w-logo-inline {
+  width: 18px;
+  color: #e11f26;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}
+
+.typeahead__twa {
+  padding: 0 0 2px 17px;
+}
+
+.typeahead__info {
+  padding: 6px 0 0 20px;
+}
+
+
+.typeahead__container {
+  .typeahead__twa-flag {
+    position: absolute;
+    height: 17px !important;
+    width: 17px !important;
+    top: 29px;
+    left: 7px;
+    margin: 0;
+  }
+}
+
 .typeahead__container {
     &.rtl {
         .typeahead__ {
             &field input {
                 direction: rtl;
-                padding: 10px;
             }
             &list-inner {
                 text-align: right;
@@ -21,6 +48,22 @@
                 }
             }
         }
+
+      .typeahead__w3w-logo-inline {
+        left: auto;
+        right: 6px;
+      }
+      .typeahead__twa {
+        padding: 1px 17px 2px 0;
+      }
+      .typeahead__info {
+        padding: 6px 23px 0 0;
+      }
+      .typeahead__twa-flag {
+        top: 29px;
+        right: 0;
+        left: auto;
+      }
     }
     .typeahead__query {
         position: relative;
