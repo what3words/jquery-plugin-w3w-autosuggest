@@ -191,6 +191,7 @@ Try it live : [sample.html](https://what3words.github.io/jquery-plugin-w3w-autos
 
 | Version  | Date     | Description |
 | -------- | -------- | ----------- |
+| `v1.5.3` | 08/11/18 | updated to use new 3 word address branding and improved 3 word address validation |
 | `v1.5.2` | 06/09/18 | a validated 3 word address field now maintains its green checkbox state |
 | `v1.5.1` | 01/05/18 | clearing the field now removes the "valid" CSS class rather than leaving it |
 | `v1.5.0` | 01/05/18 | update 3 word address validation for Japanese with interpunct |
