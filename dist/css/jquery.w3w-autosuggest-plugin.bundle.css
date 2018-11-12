@@ -128,6 +128,10 @@
   font-size: 12px;
 }
 
+.typeahead__list .typeahead__item {
+  height: 50px;
+}
+
 .typeahead__container.rtl .typeahead__list .typeahead__twa-flag {
   float: right;
   margin-left: 10px;

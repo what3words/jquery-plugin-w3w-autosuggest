@@ -416,29 +416,29 @@
                 }
               }
             }
-            // still not a sucess ?
-            // meant to be used when autosuggest was monlingual
-            // if (!isSuccess) {
-            //   // check with a forward geocoding
-            //   $.ajax({
-            //     url: _self._api_end_point + 'forward',
-            //     type: 'GET',
-            //     // async: false,
-            //     data: {
-            //       addr: addr,
-            //       key: _self.options.key,
-            //       format: 'json'
-            //     },
-            //     dataType: 'json',
-            //     success: function (result) {
-            //       var response = result;
-            //       // If W3A is VALID
-            //       if (response.hasOwnProperty('geometry')) {
-            //         isSuccess = true; // TODO fix it: already returned with false
-            //       }
-            //     } // end success
-            //   });
-            // }
+             // still not a sucess ?
+             // meant to be used when autosuggest was monlingual
+            if (!isSuccess) {
+               // check with a forward geocoding
+              $.ajax({
+                url: _self._api_end_point + 'forward',
+                type: 'GET',
+                async: false,
+                data: {
+                  addr: addr,
+                  key: _self.options.key,
+                  format: 'json'
+                },
+                dataType: 'json',
+                success: function (result) {
+                  var response = result;
+                  // If W3A is VALID
+                  if (response.hasOwnProperty('geometry')) {
+                    isSuccess = true; // TODO fix it: already returned with false
+                  }
+                } // end success
+              });
+            }
           }
           return isSuccess;
         }
