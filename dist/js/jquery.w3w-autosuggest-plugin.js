@@ -461,7 +461,7 @@
       if (form.length && form.length > 0) {
         // Init validation
         form.validate({
-          onfocusout: false,
+          onfocusout: false, // custom made
           onkeyup: function (element) {
             if ($(element).hasClass('typeahead__w3w_valid')) {
               clearTimeout(typingTimer);
