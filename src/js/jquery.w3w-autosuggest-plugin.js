@@ -58,6 +58,10 @@
     this.init();
   };
 
+  var isFocusOut = false;
+  var lastValidatedAddress;
+  var lastValidatedSuccess;
+
   $.extend(AutoSuggest.prototype, {
 
     init: function () {
@@ -314,6 +318,7 @@
             }
           },
           onNavigateAfter: function (node, lis, a, item, query, event) {
+            console.log(item);
             if (typeof item === 'undefined' || typeof item.words === 'undefined') {
               $(_self.element).attr('aria-invalid', true);
             } else {
@@ -334,18 +339,6 @@
                   $(_self.element).closest('.typeahead__query').addClass('valid');
                 }
 
-                $.ajax({
-                  url: _self._api_end_point + 'forward',
-                  type: 'GET',
-                  async: false,
-                  data: {
-                    addr: item.words,
-                    key: _self.options.key,
-                    format: 'json'
-                  },
-                  dataType: 'json'
-                });
-
                 clearTimeout(validationTypingTimer);
                 // user is "finished typing," run regex and validate
                 var clearValidationMark = function () {
@@ -360,9 +353,18 @@
             } else {
               $(_self.element).attr('aria-invalid', false);
               if (typeof item !== 'undefined') {
-                $(_self.element).trigger('selection', [item]);
+                // $(_self.element).trigger('selection', [item]);
+                setTimeout(function () {
+                  isFocusOut = true;
+                  $(_self.element).valid();
+                  $(_self.element).trigger('blur');
+                }, 300);
               }
             }
+          },
+          onHideLayout: function (node, query) {
+            isFocusOut = true;
+            $(_self.element).valid();
           },
           onCancel: function (node, event) {
             if (_self.options.validation) {
@@ -416,30 +418,39 @@
                 }
               }
             }
-             // still not a sucess ?
-             // meant to be used when autosuggest was monlingual
-            if (!isSuccess) {
-               // check with a forward geocoding
-              $.ajax({
-                url: _self._api_end_point + 'forward',
-                type: 'GET',
-                async: false,
-                data: {
-                  addr: addr,
-                  key: _self.options.key,
-                  format: 'json'
-                },
-                dataType: 'json',
-                success: function (result) {
-                  var response = result;
-                  // If W3A is VALID
-                  if (response.hasOwnProperty('geometry')) {
-                    isSuccess = true; // TODO fix it: already returned with false
+
+            if (addr === lastValidatedAddress) {
+              isSuccess = lastValidatedSuccess;
+            }
+
+            if (isFocusOut) {
+              if (addr !== lastValidatedAddress) {
+                $.ajax({
+                  url: _self._api_end_point + 'forward',
+                  type: 'GET',
+                  async: false,
+                  data: {
+                    addr: addr,
+                    key: _self.options.key,
+                    format: 'json'
+                  },
+                  dataType: 'json',
+                  success: function (result) {
+                    if (result.hasOwnProperty('geometry')) {
+                      isSuccess = true;
+                    }
                   }
-                } // end success
-              });
+                });
+                lastValidatedAddress = addr;
+                lastValidatedSuccess = isSuccess;
+              } else {
+                isSuccess = lastValidatedSuccess;
+              }
+
+              isFocusOut = false;
             }
           }
+          console.log('validate', isFocusOut, isSuccess);
           return isSuccess;
         }
       }, function () {
@@ -461,7 +472,10 @@
       if (form.length && form.length > 0) {
         // Init validation
         form.validate({
-          onfocusout: false, // custom made
+          onfocusout: function (element) {
+            isFocusOut = true;
+            $(element).valid();
+          },
           onkeyup: function (element) {
             if ($(element).hasClass('typeahead__w3w_valid')) {
               clearTimeout(typingTimer);

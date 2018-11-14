@@ -6,7 +6,7 @@
   max-width: 18px;
   position: absolute;
   left: 7px;
-  top: 6px;
+  top: calc(50% - 9px);
   z-index: 3;
   color: #e11f26;
 }
@@ -25,6 +25,14 @@
   left: auto;
   top: 6px;
   right: 7px;
+}
+
+.typeahead__cancel-button {
+  line-height: 20px !important;
+  top: calc(50% - 10px);
+  height: 20px;
+  padding: 0 !important;
+  right: 10px !important;
 }
 
 .typeahead__w3w-logo-inline {
@@ -111,6 +119,10 @@
   background-size: auto 65% !important;
 }
 
+.typeahead__list {
+  padding: 0 !important;
+}
+
 .typeahead__list .typeahead__twa {
   font-size: 15px;
 }
@@ -126,10 +138,7 @@
   display: block;
   overflow: hidden;
   font-size: 12px;
-}
-
-.typeahead__list .typeahead__item {
-  height: 50px;
+  height: 20px;
 }
 
 .typeahead__container.rtl .typeahead__list .typeahead__twa-flag {
