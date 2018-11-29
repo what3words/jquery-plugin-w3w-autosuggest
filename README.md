@@ -191,6 +191,7 @@ Try it live : [sample.html](https://what3words.github.io/jquery-plugin-w3w-autos
 
 | Version  | Date     | Description |
 | -------- | -------- | ----------- |
+| `v1.5.5` | 29/11/18 | fix logo styling for rtl languages
 | `v1.5.4` | 12/11/18 | add validation when focus out from input field
 | `v1.5.3` | 08/11/18 | updated to use new 3 word address branding and improved 3 word address validation |
 | `v1.5.2` | 06/09/18 | a validated 3 word address field now maintains its green checkbox state |
