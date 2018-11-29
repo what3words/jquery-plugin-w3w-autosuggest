@@ -13,19 +13,13 @@
   }
 
   &.rtl {
-    .typeahead__w3w-logo {
-      right: 0;
-      left: auto;
-      top: 0;
-    }
-
     .typeahead__padlogo {
       padding-right: 25px !important;
     }
 
     .typeahead__w3w-logo {
       left: auto;
-      top: 6px;
+      top: calc(50% - 9px);
       right: 7px;
     }
   }
