@@ -51,7 +51,16 @@ or separately
 <script src="path/to/jquery.validation"></script>
 <script src="[path-to-plugin]/js/jquery.w3w-autosuggest-plugin.min.js"></script>
 ```
-
+Add the input element which will become the what3words autosuggest field. This must be within a form element for example:
+```html
+<div>
+      <div>
+        <form>
+          <input id="twa-input" class="w3w-address-field" type="text" >
+        </form>
+      </div>
+    </div>
+```
 Add the CSS to the  `<header>`:
 ```html
 <link rel="stylesheet" href="[path-to-plugin]/css/jquery.w3w-autosuggest-plugin.bundle.min.css">
